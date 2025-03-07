@@ -246,7 +246,7 @@ paths:
                       description: Ci sono perdite perché si è rotta una tegola del tetto
                       issue-date: '2019-08-24T14:15:22Z'
                       status: Nuovo
-                      note: La grandine ha rotto la tegola
+                      note: la grandine ha rotto la tegola
                       priority: Alta
         '400':
           description: Bad Request
