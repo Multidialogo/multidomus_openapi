@@ -1,0 +1,581 @@
+openapi: 3.1.0
+x-stoplight:
+  id: pwf784ccdu36j
+info:
+  title: Multidomus
+  version: '1.0'
+  description: Set of API endpoints for the Multidomus app
+servers:
+  - url: 'https://api.multidomus.it'
+paths:
+  /users/check-email:
+    get:
+      summary: Check email registration
+      tags:
+        - Users
+      responses:
+        '200':
+          description: The email was found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mailStatus:
+                    type: string
+                    x-stoplight:
+                      id: wwsgh5hlc327c
+                    enum:
+                      - NOT_REGISTERED
+                      - MISSING_TS_ID
+                      - REGISTERED
+                required:
+                  - mailStatus
+              examples:
+                Example 1:
+                  value:
+                    mailStatus: NOT_REGISTERED
+                Example 2:
+                  value:
+                    mailStatus: MISSING_TS_ID
+                Example 3:
+                  value:
+                    mailStatus: REGISTERED
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      operationId: get-users-check-email-registration
+      x-stoplight:
+        id: 1vc3ql9xnp9s1
+      security: []
+      description: Check whether there is a user registered with the given email
+      parameters:
+        - schema:
+            type: string
+          in: query
+          name: email
+          description: The email to be checked
+          required: true
+    parameters: []
+  /users/me:
+    parameters: []
+    get:
+      summary: Get my user Info
+      responses:
+        '200':
+          description: User Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+              examples:
+                Example 1:
+                  value:
+                    first_name: Tony
+                    last_name: Stark
+                    roles:
+                      - type: Supplier
+                        company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+                        company_name: Stark Industries
+                      - type: Tenant
+                        unit_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+                        unit_address: '10880 Malibu Point, 90265'
+        '401':
+          description: Unauthorized
+        '404':
+          description: User Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-users-me
+      description: Retrieve the information of the authenticated user.
+      x-stoplight:
+        id: bexwy0vpz2q0e
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+    servers: []
+  /administrator/by-unit-id:
+    get:
+      summary: Get administrator details by unit id
+      tags:
+        - Tenant
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Administrator'
+              examples:
+                Example 1:
+                  value:
+                    first-name: Harold
+                    last-name: Hogan
+                    role: Amministratore
+                    creation-date: '2019-08-24T14:15:22Z'
+                    last-update-date: '2019-08-24T14:15:22Z'
+                    studio: Stark Industries
+                    phone-number: '+3934512345678'
+                    email: happy@gmail.com
+                    address: 'Via Emilia Ovest, 129'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-administrator-by-unit-id
+      x-stoplight:
+        id: b45udl5e8l11f
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+          in: query
+          name: unit-id
+          required: true
+          description: The UUID of the residential unit to get info about
+      description: Retrieve the information of the administrator for the condo of the given residential unit
+    parameters: []
+  /condo/by-unit-id:
+    get:
+      summary: Get condo details by unit id
+      tags:
+        - Tenant
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Condo'
+              examples:
+                Example 1:
+                  value:
+                    name: Morgan
+                    address: 'Via Emilia Ovest, 129'
+                    fiscal-code: STRTNY70E29Z404M
+                    type: Condominio
+                    creation-date: '2019-08-24T14:15:22Z'
+                    last-update-date: '2019-08-24T14:15:22Z'
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-condo-by-unit-id
+      x-stoplight:
+        id: 3yv80wdr060ps
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+          in: query
+          name: unit-id
+          required: true
+          description: The UUID of the residential unit to get info about
+      description: Retrieve the details for the condo of the given residential unit
+    parameters: []
+  /alerts/by-unit-id:
+    get:
+      summary: Get alerts by unit id
+      tags:
+        - Tenant
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Alert'
+                  x-stoplight:
+                    id: z01xzblv4xbbs
+              examples:
+                Example 2:
+                  value:
+                    - title: Biciclette
+                      description: Si prega di evitare di lasciare biciclette nell'androne
+                      creation-date: '2019-08-24T14:15:22Z'
+                      type: Regolamento
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-alerts-by-unit-id
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+          in: query
+          name: unit-id
+          required: true
+          description: The UUID of the residential unit to get info about
+      x-stoplight:
+        id: 1wp94f9d6cin3
+      description: Retrieve the current alerts for the condo of the given residential unit
+    parameters: []
+  /tasks/by-company-id:
+    get:
+      summary: Get tasks by company id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Task'
+              examples:
+                Example 1:
+                  value:
+                    - title: Tetto
+                      description: Ci sono perdite perché si è rotta una tegola del tetto
+                      issue-date: '2019-08-24T14:15:22Z'
+                      status: Nuovo
+                      note: la grandine ha rotto la tegola
+                      priority: Alta
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-tasks-by-company-id
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+          in: query
+          name: company-id
+          required: true
+          description: The UUID of the company to get info about
+      description: Retrieve the current tasks for the given company
+      x-stoplight:
+        id: t2ehtm7y4gnss
+      tags:
+        - Supplier
+    parameters: []
+components:
+  schemas:
+    User:
+      title: User
+      type: object
+      x-stoplight:
+        id: 08wli6aetbnl7
+      required:
+        - first_name
+        - last_name
+        - roles
+      properties:
+        first_name:
+          type: string
+          x-stoplight:
+            id: zrf244fkyujmi
+        last_name:
+          type: string
+          x-stoplight:
+            id: 230s9qznu9f0w
+        roles:
+          type: array
+          x-stoplight:
+            id: 6phdfbmd43rl1
+          description: The roles that user can assume to operate into the app
+          items:
+            $ref: '#/components/schemas/Role'
+            x-stoplight:
+              id: usf4l3srvkcz5
+      examples:
+        - first_name: Tony
+          last_name: Stark
+          roles:
+            - type: Supplier
+              company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+              company_name: Stark Industries
+            - type: Tenant
+              unit_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+              unit_address: '10880 Malibu Point, 90265'
+    Role:
+      title: Role
+      x-stoplight:
+        id: c5i27osgdsk0g
+      anyOf:
+        - x-stoplight:
+            id: bfx1v1a5t26y5
+          required:
+            - type
+            - company_id
+            - company_name
+          properties:
+            type:
+              x-stoplight:
+                id: 4ppeqehjjm93v
+              enum:
+                - Supplier
+            company_id:
+              type: string
+              x-stoplight:
+                id: jcv8thl7kahz7
+              format: uuid
+            company_name:
+              type: string
+              x-stoplight:
+                id: qxpi1suzjsdx1
+        - x-stoplight:
+            id: qdgob5qhawdq0
+          required:
+            - type
+            - unit_id
+            - unit_address
+          properties:
+            type:
+              x-stoplight:
+                id: qim93e8mxswg5
+              enum:
+                - Tenant
+            unit_id:
+              type: string
+              x-stoplight:
+                id: ninbczs22urk7
+              format: uuid
+            unit_address:
+              $ref: '#/components/schemas/Address'
+              x-stoplight:
+                id: 4k25eg95p0kjf
+      examples:
+        - type: Tenant
+          unit_id: string
+          unit_address: 'Via Emilia Ovest, 129'
+        - type: Supplier
+          company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+          company_name: Multicerta s.r.l.
+      type: object
+    Condo:
+      title: Condo
+      x-stoplight:
+        id: ouda83379zkok
+      type: object
+      required:
+        - name
+        - address
+        - type
+        - creation-date
+        - last-update-date
+      properties:
+        name:
+          type: string
+          x-stoplight:
+            id: f6sde9ilzw2a1
+        address:
+          $ref: '#/components/schemas/Address'
+          x-stoplight:
+            id: t2otiys3bzv5m
+        fiscal-code:
+          type: string
+          x-stoplight:
+            id: 0rqvqbk8uh4cy
+        type:
+          x-stoplight:
+            id: oq6wqzybssogr
+          enum:
+            - Condominio
+            - SuperCondominio
+        creation-date:
+          type: string
+          x-stoplight:
+            id: fkduqobxlxed0
+          format: date-time
+        last-update-date:
+          type: string
+          x-stoplight:
+            id: go00yw4r5q2n3
+          format: date-time
+      examples:
+        - name: Morgan
+          address: 'Via Emilia Ovest, 129'
+          fiscal-code: STRTNY70E29Z404M
+          type: Condominio
+          creation-date: '2019-08-24T14:15:22Z'
+          last-update-date: '2019-08-24T14:15:22Z'
+    Administrator:
+      title: Administrator
+      x-stoplight:
+        id: sd189gyzoi27u
+      type: object
+      examples:
+        - first-name: Harold
+          last-name: Hogan
+          role: Amministratore
+          creation-date: '2019-08-24T14:15:22Z'
+          last-update-date: '2019-08-24T14:15:22Z'
+          studio: Stark Industries
+          phone-number: '+3934512345678'
+          email: happy@gmail.com
+          address: 'Via Emilia Ovest, 129'
+      required:
+        - first-name
+        - last-name
+        - creation-date
+        - last-update-date
+        - studio
+        - phone-number
+      properties:
+        first-name:
+          type: string
+          x-stoplight:
+            id: j0vhfkrswcyro
+        last-name:
+          type: string
+          x-stoplight:
+            id: oqt0cgyv7t243
+        role:
+          type: string
+          x-stoplight:
+            id: 0vvcvhzvbyimd
+        creation-date:
+          type: string
+          x-stoplight:
+            id: hza6og3v3wggr
+          format: date-time
+        last-update-date:
+          type: string
+          x-stoplight:
+            id: rpk159qvf52gp
+          format: date-time
+        studio:
+          type: string
+          x-stoplight:
+            id: 5w7wfm9o3jq15
+        phone-number:
+          type: string
+          x-stoplight:
+            id: s04e093wtzh2s
+        email:
+          type: string
+          x-stoplight:
+            id: 2omqc8klop9ig
+          format: email
+        address:
+          $ref: '#/components/schemas/Address'
+          x-stoplight:
+            id: 84lkzpn9g7er3
+    Address:
+      title: Address
+      x-stoplight:
+        id: z50xas5yrryv1
+      type: string
+      examples:
+        - 'Via Emilia Ovest, 129'
+    Alert:
+      title: Alert
+      x-stoplight:
+        id: ss8myksrd80v4
+      type: object
+      examples:
+        - title: Biciclette
+          description: Si prega di evitare di lasciare biciclette nell'androne
+          creation-date: '2019-08-24T14:15:22Z'
+          type: Regolamento
+      required:
+        - title
+        - creation-date
+        - type
+      properties:
+        title:
+          type: string
+          x-stoplight:
+            id: 4yjmb7ly5vava
+        description:
+          type: string
+          x-stoplight:
+            id: fy2ildq5okt1v
+        creation-date:
+          type: string
+          x-stoplight:
+            id: u53tidut3a6cq
+          format: date-time
+        type:
+          x-stoplight:
+            id: myk55xlltrcoh
+          enum:
+            - Scadenza
+            - Manutenzione
+            - Comunicazione
+            - Generale
+            - Regolamento
+    Task:
+      title: Task
+      x-stoplight:
+        id: nogmilwtad7pj
+      type: object
+      required:
+        - title
+        - issue-date
+        - status
+        - priority
+      properties:
+        title:
+          type: string
+          x-stoplight:
+            id: j1623kzlr7sn7
+        description:
+          type: string
+          x-stoplight:
+            id: wc3b7oh0eu22b
+        issue-date:
+          type: string
+          x-stoplight:
+            id: xll5zatfitx3m
+          format: date-time
+        status:
+          x-stoplight:
+            id: gltxvf8xnfaar
+          enum:
+            - Nuovo
+            - In corso
+            - Risolto
+            - Chiuso
+        note:
+          type: string
+          x-stoplight:
+            id: ea5cz6auz04i8
+        priority:
+          x-stoplight:
+            id: xku7hf59yvpuy
+          enum:
+            - Alta
+            - Media
+            - Bassa
+      examples:
+        - title: Tetto
+          description: Ci sono perdite perché si è rotta una tegola del tetto
+          issue-date: '2019-08-24T14:15:22Z'
+          status: Nuovo
+          note: la grandine ha rotto la tegola
+          priority: Alta
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: The "Authorization" header containing a JWT bearer token issued by TS Identity with the user email and the assigned TS ID in UUID format
+security:
+  - bearerAuth: []
+tags:
+  - name: Supplier
+  - name: Tenant
+  - name: Users
