@@ -8,6 +8,43 @@ info:
 servers:
   - url: 'https://api.multidomus.it'
 paths:
+  /alerts/:
+    get:
+      summary: Get alerts
+      tags:
+        - Admin
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Alert'
+                  x-stoplight:
+                    id: z01xzblv4xbbs
+              examples:
+                Example 2:
+                  value:
+                    - title: Biciclette
+                      description: Si prega di evitare di lasciare biciclette nell'androne
+                      creation-date: '2019-08-24T14:15:22Z'
+                      type: Regolamento
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-alerts
+      parameters: []
+      x-stoplight:
+        id: 1wp94f9d6cin3
+      description: Retrieve the all current alerts for current user (must be called by an admin)
+    parameters: []
   /tasks/by-company-id:
     get:
       summary: Get tasks by company id
@@ -97,6 +134,116 @@ paths:
           description: The UUID of the condo to get info about
       description: Retrieve the information of the administrator for the given condo
     parameters: []
+  /alerts/by-condo-id:
+    get:
+      summary: Get alerts by condo id
+      tags:
+        - Tenant
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Alert'
+                  x-stoplight:
+                    id: z01xzblv4xbbs
+              examples:
+                Example 2:
+                  value:
+                    - title: Biciclette
+                      description: Si prega di evitare di lasciare biciclette nell'androne
+                      creation-date: '2019-08-24T14:15:22Z'
+                      type: Regolamento
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-alerts-by-condo-id
+      parameters:
+        - schema:
+            type: string
+            format: uuid
+          in: query
+          name: condo-id
+          required: true
+          description: The UUID of the condo to get info about
+      x-stoplight:
+        id: 1wp94f9d6cin3
+      description: Retrieve the current alerts for the given condo
+    parameters: []
+  /alerts/to-admin:
+    parameters: []
+    post:
+      summary: Send alert to admin
+      operationId: post-alerts-to-admin
+      responses:
+        '201':
+          description: Created
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal Server Error
+      description: Send an alert to the admin of a condo
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                condo-id:
+                  type: string
+                  x-stoplight:
+                    id: elncxi0nftqcg
+                  format: uuid
+                title:
+                  type: string
+                  x-stoplight:
+                    id: scftcpelr7u3j
+                content:
+                  type: string
+                  x-stoplight:
+                    id: 3546adlvlm20m
+                type:
+                  type: string
+                  x-stoplight:
+                    id: dd1f35bqpljfk
+                  enum:
+                    - Guasto
+                    - Problema
+                    - Richiesta informazioni
+                    - Altro
+                visible-to-all:
+                  type: boolean
+                  x-stoplight:
+                    id: 8epn913zjw3nj
+              required:
+                - condo-id
+                - content
+                - type
+            examples:
+              Example 1:
+                value:
+                  condo-id: 2f78814f-e2c6-46b8-a02d-89e129b8dd05
+                  title: Perdita tetto
+                  content: Dal mio soffitto entra acqua che arriva dal tetto
+                  type: Guasto
+                  visible-to-all: true
+              Example 2:
+                value:
+                  condo-id: 2f78814f-e2c6-46b8-a02d-89e129b8dd05
+                  title: Pagamenti
+                  content: Posso fare un bonifico da un IBAN estero?
+                  type: Richiesta informazioni
+                  visible-to-all: false
   /condo/by-condo-id:
     get:
       summary: Get condo details by condo id
@@ -181,50 +328,6 @@ paths:
           required: true
           description: The UUID of the condo to get info about
       description: Retrieve the details of the owned residential units in the given condo
-    parameters: []
-  /alerts/by-condo-id:
-    get:
-      summary: Get alerts by condo id
-      tags:
-        - Tenant
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Alert'
-                  x-stoplight:
-                    id: z01xzblv4xbbs
-              examples:
-                Example 2:
-                  value:
-                    - title: Biciclette
-                      description: Si prega di evitare di lasciare biciclette nell'androne
-                      creation-date: '2019-08-24T14:15:22Z'
-                      type: Regolamento
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-      operationId: get-alerts-by-condo-id
-      parameters:
-        - schema:
-            type: string
-            format: uuid
-          in: query
-          name: condo-id
-          required: true
-          description: The UUID of the condo to get info about
-      x-stoplight:
-        id: 1wp94f9d6cin3
-      description: Retrieve the current alerts for the given condo
     parameters: []
   /users/check-email:
     get:
@@ -323,6 +426,40 @@ components:
       type: string
       examples:
         - 'Via Emilia Ovest, 129'
+    Admin-Activity:
+      title: Admin-Activity
+      x-stoplight:
+        id: 1z8o4gyxv1p3m
+      type: object
+      examples:
+        - start-date: '2019-08-24'
+          end-date: '2019-08-24'
+          admin-company-id: e028496c-e766-4bb7-bb98-e5c8d13cbbac
+          extraordinary: true
+      properties:
+        start-date:
+          type: string
+          x-stoplight:
+            id: lavv5k642kf8j
+          format: date
+        end-date:
+          type: string
+          x-stoplight:
+            id: v86efk74av1nm
+          format: date
+        admin-company-id:
+          type: string
+          x-stoplight:
+            id: kkzm3msj7rb69
+          format: uuid
+        extraordinary:
+          type: boolean
+          x-stoplight:
+            id: gy9cyqbzyq9l6
+      required:
+        - start-date
+        - admin-company-id
+        - extraordinary
     Administrator:
       title: Administrator
       x-stoplight:
@@ -331,20 +468,18 @@ components:
       examples:
         - first-name: Harold
           last-name: Hogan
-          role: Amministratore
+          role: string
           creation-date: '2019-08-24T14:15:22Z'
           last-update-date: '2019-08-24T14:15:22Z'
           studio: Stark Industries
-          phone-number: '+3934512345678'
-          email: happy@gmail.com
+          reception-hours: Lun-Ven 8-13 14-18
           address: 'Via Emilia Ovest, 129'
-      required:
-        - first-name
-        - last-name
-        - creation-date
-        - last-update-date
-        - studio
-        - phone-number
+          contacts:
+            id: string
+            phone: '345123456789'
+            emergency-phone: string
+            email: happy@gmail.com
+            pec: user@pec-example.com
       properties:
         first-name:
           type: string
@@ -372,19 +507,25 @@ components:
           type: string
           x-stoplight:
             id: 5w7wfm9o3jq15
-        phone-number:
+        reception-hours:
           type: string
           x-stoplight:
-            id: s04e093wtzh2s
-        email:
-          type: string
-          x-stoplight:
-            id: 2omqc8klop9ig
-          format: email
+            id: m2j37ue8wdmmw
         address:
           $ref: '#/components/schemas/Address'
           x-stoplight:
             id: 84lkzpn9g7er3
+        contacts:
+          $ref: '#/components/schemas/Contact'
+          x-stoplight:
+            id: hsqh52owdtc33
+      required:
+        - first-name
+        - last-name
+        - creation-date
+        - last-update-date
+        - studio
+        - contacts
     Alert:
       title: Alert
       x-stoplight:
@@ -423,6 +564,32 @@ components:
         - title
         - creation-date
         - type
+    Bank-Account:
+      title: Bank-Account
+      x-stoplight:
+        id: w7jmblsga16qp
+      type: object
+      properties:
+        number:
+          type: string
+          x-stoplight:
+            id: 4n9w6ms8gavdn
+        bank:
+          type: string
+          x-stoplight:
+            id: b4jo20te3vxlq
+        IBAN:
+          type: string
+          x-stoplight:
+            id: lfbbn7jaa1eap
+      required:
+        - number
+        - bank
+        - IBAN
+      examples:
+        - number: '12341234312'
+          bank: Fort Knox
+          IBAN: IT5492843765923878263463
     Condo:
       title: Condo
       x-stoplight:
@@ -435,6 +602,15 @@ components:
           type: Condominio
           creation-date: '2019-08-24T14:15:22Z'
           last-update-date: '2019-08-24T14:15:22Z'
+          admin-activities:
+            - start-date: '2019-08-24'
+              end-date: '2019-08-24'
+              admin-company-id: e028496c-e766-4bb7-bb98-e5c8d13cbbac
+              extraordinary: true
+          accounts:
+            - number: '12341234312'
+              bank: Fort Knox
+              IBAN: IT5492843765923878263463
       properties:
         name:
           type: string
@@ -465,12 +641,74 @@ components:
           x-stoplight:
             id: go00yw4r5q2n3
           format: date-time
+        admin-activities:
+          type: array
+          x-stoplight:
+            id: sc5uqezcglcvy
+          items:
+            $ref: '#/components/schemas/Admin-Activity'
+            x-stoplight:
+              id: urfcfnhval9ma
+        accounts:
+          type: array
+          x-stoplight:
+            id: bf1bl3invw1yr
+          items:
+            $ref: '#/components/schemas/Bank-Account'
+            x-stoplight:
+              id: g02r9ka96n6px
       required:
         - name
         - address
         - type
         - creation-date
         - last-update-date
+        - admin-activities
+    Contact:
+      title: Contact
+      x-stoplight:
+        id: bz3bf4icrlbj5
+      type: object
+      properties:
+        id:
+          type: string
+        phone:
+          type: string
+          x-stoplight:
+            id: 12afq6qakbohj
+        cellphone:
+          type: string
+          x-stoplight:
+            id: m9owrh20mmbfq
+        emergency-phone:
+          type: string
+          x-stoplight:
+            id: du2ydo98vn6w9
+        fax:
+          type: string
+          x-stoplight:
+            id: jrtf89h8gfh11
+        email:
+          type: string
+          x-stoplight:
+            id: kroz36s6959t0
+          format: email
+        pec:
+          type: string
+          x-stoplight:
+            id: l979q91p2b6w6
+          format: email
+      required:
+        - id
+        - phone
+        - emergency-phone
+        - email
+      examples:
+        - id: string
+          phone: '345123456789'
+          emergency-phone: string
+          email: user@example.com
+          pec: user@pec-example.com
     Residential-Unit:
       title: Residential-Unit
       x-stoplight:
@@ -674,6 +912,7 @@ components:
 security:
   - bearerAuth: []
 tags:
+  - name: Admin
   - name: Supplier
   - name: Tenant
   - name: Users
