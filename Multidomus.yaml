@@ -244,6 +244,8 @@ paths:
                   content: Posso fare un bonifico da un IBAN estero?
                   type: Richiesta informazioni
                   visible-to-all: false
+      tags:
+        - Tenant
   /condo/by-condo-id:
     get:
       summary: Get condo details by condo id
@@ -379,6 +381,100 @@ paths:
           description: The email to be checked
           required: true
     parameters: []
+  /users/link-brainware-account:
+    parameters: []
+    post:
+      summary: Link Brainware account
+      operationId: post-users-link-brainware-account
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pid:
+                  type: string
+                  x-stoplight:
+                    id: 8myasvj820nr1
+                username:
+                  type: string
+                  x-stoplight:
+                    id: 8cumx1mynvpuz
+                password:
+                  type: string
+                  x-stoplight:
+                    id: zy2wu53ctlwqv
+              required:
+                - pid
+                - username
+                - password
+            examples:
+              Example 1:
+                value:
+                  pid: '968'
+                  username: IronMan
+                  password: P3pp3rP0tt$
+      description: Link the current user to a previous Brainware account
+  /users/link-miocondominio-account:
+    parameters: []
+    post:
+      summary: Link MioCondominio account
+      operationId: post-users-link-miocondominio-account
+      responses:
+        '200':
+          description: OK
+        '400':
+          description: Bad Request
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '500':
+          description: Internal Server Error
+      tags:
+        - Users
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                pid:
+                  type: string
+                  x-stoplight:
+                    id: 8myasvj820nr1
+                username:
+                  type: string
+                  x-stoplight:
+                    id: 8cumx1mynvpuz
+                password:
+                  type: string
+                  x-stoplight:
+                    id: zy2wu53ctlwqv
+              required:
+                - pid
+                - username
+                - password
+            examples:
+              Example 1:
+                value:
+                  pid: '968'
+                  username: IronMan
+                  password: P3pp3rP0tt$
+      description: Link the current user to a previous MioCondominio account
   /users/me:
     parameters: []
     get:
