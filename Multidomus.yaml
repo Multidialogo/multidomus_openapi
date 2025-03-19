@@ -8,44 +8,7 @@ info:
 servers:
   - url: 'https://api.multidomus.it'
 paths:
-  /alerts:
-    get:
-      summary: Get alerts
-      tags:
-        - Admin
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Alert'
-                  x-stoplight:
-                    id: z01xzblv4xbbs
-              examples:
-                Example 2:
-                  value:
-                    - title: Biciclette
-                      description: Si prega di evitare di lasciare biciclette nell'androne
-                      creation-date: '2019-08-24T14:15:22Z'
-                      type: Regolamento
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-      operationId: get-alerts
-      parameters: []
-      x-stoplight:
-        id: 1wp94f9d6cin3
-      description: Retrieve the all current alerts for current user (must be called by an admin)
-    parameters: []
-  /tasks/by-company-id:
+  /tasks:
     get:
       summary: Get tasks by company id
       responses:
@@ -89,7 +52,7 @@ paths:
       tags:
         - Supplier
     parameters: []
-  /administrator/by-condo-id:
+  /administrator:
     get:
       summary: Get administrator details by condo id
       tags:
@@ -139,11 +102,12 @@ paths:
           description: The UUID of the condo to get info about
       description: Retrieve the information of the administrator for the given condo
     parameters: []
-  /alerts/by-condo-id:
+  /alerts:
     get:
-      summary: Get alerts by condo id
+      summary: Get alerts
       tags:
         - Tenant
+        - Admin
       responses:
         '200':
           description: OK
@@ -152,16 +116,32 @@ paths:
               schema:
                 type: array
                 items:
-                  $ref: '#/components/schemas/Alert'
                   x-stoplight:
                     id: z01xzblv4xbbs
+                  type: object
+                  properties:
+                    condo-id:
+                      type: string
+                      x-stoplight:
+                        id: kh8lmvra8539u
+                      format: uuid
+                    alerts:
+                      type: array
+                      x-stoplight:
+                        id: pnh1pv2y8njh9
+                      items:
+                        $ref: '#/components/schemas/Alert'
+                        x-stoplight:
+                          id: 7p7i52uwl4yvr
               examples:
-                Example 2:
+                Example 1:
                   value:
-                    - title: Biciclette
-                      description: Si prega di evitare di lasciare biciclette nell'androne
-                      creation-date: '2019-08-24T14:15:22Z'
-                      type: Regolamento
+                    - condo-id: 2f78814f-e2c6-46b8-a02d-89e129b8dd05
+                      alerts:
+                        - title: Biciclette
+                          description: Si prega di evitare di lasciare biciclette nell'androne
+                          creation-date: '2019-08-24T14:15:22Z'
+                          type: Regolamento
         '400':
           description: Bad Request
         '401':
@@ -177,17 +157,14 @@ paths:
             format: uuid
           in: query
           name: condo-id
-          required: true
           description: The UUID of the condo to get info about
       x-stoplight:
         id: 1wp94f9d6cin3
-      description: Retrieve the current alerts for the given condo
-    parameters: []
-  /alerts/to-admin:
+      description: 'Retrieve all the current alerts for current user, can be filtered by condo-id'
     parameters: []
     post:
       summary: Send alert to admin
-      operationId: post-alerts-to-admin
+      operationId: post-alerts
       responses:
         '201':
           description: Created
@@ -197,39 +174,29 @@ paths:
           description: Unauthorized
         '500':
           description: Internal Server Error
-      description: Send an alert to the admin of a condo
       requestBody:
         content:
           application/json:
             schema:
               type: object
+              x-examples:
+                Example 1:
+                  condo-id: 2f78814f-e2c6-46b8-a02d-89e129b8dd05
+                  title: Perdita tetto
+                  content: Dal mio soffitto entra acqua che arriva dal tetto
+                  type: Guasto
+                  visible-to-all: true
               properties:
                 condo-id:
                   type: string
-                  x-stoplight:
-                    id: elncxi0nftqcg
-                  format: uuid
                 title:
                   type: string
-                  x-stoplight:
-                    id: scftcpelr7u3j
                 content:
                   type: string
-                  x-stoplight:
-                    id: 3546adlvlm20m
                 type:
                   type: string
-                  x-stoplight:
-                    id: dd1f35bqpljfk
-                  enum:
-                    - Guasto
-                    - Problema
-                    - Richiesta informazioni
-                    - Altro
                 visible-to-all:
                   type: boolean
-                  x-stoplight:
-                    id: 8epn913zjw3nj
               required:
                 - condo-id
                 - content
@@ -249,9 +216,11 @@ paths:
                   content: Posso fare un bonifico da un IBAN estero?
                   type: Richiesta informazioni
                   visible-to-all: false
+      description: Send an alert related to a condo
       tags:
+        - Admin
         - Tenant
-  /condo/by-condo-id:
+  /condo:
     get:
       summary: Get condo details by condo id
       tags:
@@ -302,7 +271,7 @@ paths:
           description: The UUID of the condo to get info about
       description: Retrieve the details of the given condo
     parameters: []
-  /residential-units/by-condo-id:
+  /residential-units:
     get:
       summary: Get units details by condo id
       tags:
@@ -345,6 +314,19 @@ paths:
           description: The UUID of the condo to get info about
       description: Retrieve the details of the owned residential units in the given condo
     parameters: []
+  /healthz:
+    get:
+      summary: Healthcheck
+      tags:
+        - Users
+      responses:
+        '200':
+          description: OK
+        '500':
+          description: Internal Server Error
+      operationId: get-healthz
+      description: An health check endpoint
+      security: []
   /users/check-email:
     get:
       summary: Check email registration
