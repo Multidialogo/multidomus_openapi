@@ -195,6 +195,11 @@ paths:
                   type: string
                 type:
                   type: string
+                  enum:
+                    - Guasto
+                    - Problema
+                    - 'Richiesta Informazioni'
+                    - Altro
                 visible-to-all:
                   type: boolean
               required:
@@ -214,7 +219,7 @@ paths:
                   condo-id: 2f78814f-e2c6-46b8-a02d-89e129b8dd05
                   title: Pagamenti
                   content: Posso fare un bonifico da un IBAN estero?
-                  type: Richiesta informazioni
+                  type: Richiesta Informazioni
                   visible-to-all: false
       description: Send an alert related to a condo
       tags:
@@ -377,7 +382,7 @@ paths:
           description: The email to be checked
           required: true
     parameters: []
-  /users/link-brainware-account:
+  /users/brainware-account:
     parameters: []
     post:
       summary: Link Brainware account
@@ -424,7 +429,7 @@ paths:
                   username: IronMan
                   password: P3pp3rP0tt$
       description: Link the current user to a previous Brainware account
-  /users/link-miocondominio-account:
+  /users/miocondominio-account:
     parameters: []
     post:
       summary: Link MioCondominio account
