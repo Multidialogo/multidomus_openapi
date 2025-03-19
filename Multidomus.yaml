@@ -8,7 +8,7 @@ info:
 servers:
   - url: 'https://api.multidomus.it'
 paths:
-  /alerts/:
+  /alerts:
     get:
       summary: Get alerts
       tags:
@@ -106,13 +106,18 @@ paths:
                   value:
                     first-name: Harold
                     last-name: Hogan
-                    role: Amministratore
+                    role: string
                     creation-date: '2019-08-24T14:15:22Z'
                     last-update-date: '2019-08-24T14:15:22Z'
                     studio: Stark Industries
-                    phone-number: '+3934512345678'
-                    email: happy@gmail.com
+                    reception-hours: Lun-Ven 8-13 14-18
                     address: 'Via Emilia Ovest, 129'
+                    contacts:
+                      id: string
+                      phone: '345123456789'
+                      emergency-phone: string
+                      email: happy@gmail.com
+                      pec: user@pec-example.com
         '400':
           description: Bad Request
         '401':
@@ -267,6 +272,15 @@ paths:
                     type: Condominio
                     creation-date: '2019-08-24T14:15:22Z'
                     last-update-date: '2019-08-24T14:15:22Z'
+                    admin-activities:
+                      - start-date: '2019-08-24'
+                        end-date: '2019-08-24'
+                        admin-company-id: e028496c-e766-4bb7-bb98-e5c8d13cbbac
+                        extraordinary: true
+                    accounts:
+                      - number: '12341234312'
+                        bank: Fort Knox
+                        IBAN: IT5492843765923878263463
         '400':
           description: Bad Request
         '401':
@@ -493,11 +507,11 @@ paths:
                     last_name: Stark
                     roles:
                       - type: Supplier
-                        company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+                        supplier_company_id: 2c7f0822-af41-49ba-8d30-cdf65b77d960
                         company_name: Stark Industries
                       - type: Tenant
-                        unit_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
-                        unit_address: '10880 Malibu Point, 90265'
+                        condo_company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+                        condo_address: '10880 Malibu Point, 90265'
         '401':
           description: Unauthorized
         '404':
@@ -905,7 +919,7 @@ components:
             - company_name
       examples:
         - type: Tenant
-          condo_company_id: string
+          condo_company_id: 2c7f0822-af41-49ba-8d30-cdf65b77d960
           condo_address: 'Via Emilia Ovest, 129'
         - type: Supplier
           supplier_company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
@@ -995,7 +1009,7 @@ components:
           last_name: Stark
           roles:
             - type: Supplier
-              supplier_company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+              supplier_company_id: 2c7f0822-af41-49ba-8d30-cdf65b77d960
               company_name: Stark Industries
             - type: Tenant
               condo_company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
@@ -1004,7 +1018,7 @@ components:
     bearerAuth:
       type: http
       scheme: bearer
-      description: The "Authorization" header containing a JWT bearer token issued by TS Identity with the user email and the assigned TS ID in UUID format
+      description: The "Authorization" header must be a JWT bearer token issued by TS Identity containing the user email and the assigned TS ID in UUID format
 security:
   - bearerAuth: []
 tags:
