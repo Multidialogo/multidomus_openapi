@@ -163,7 +163,7 @@ paths:
       description: 'Retrieve all the current alerts for current user, can be filtered by condo-id'
     parameters: []
     post:
-      summary: Send alert to admin
+      summary: Send alert
       operationId: post-alerts
       responses:
         '201':
@@ -198,7 +198,7 @@ paths:
                   enum:
                     - Guasto
                     - Problema
-                    - 'Richiesta Informazioni'
+                    - Richiesta Informazioni
                     - Altro
                 visible-to-all:
                   type: boolean
@@ -507,6 +507,33 @@ paths:
           description: Internal Server Error
       operationId: get-users-me
       description: Retrieve the information of the authenticated user.
+      x-stoplight:
+        id: bexwy0vpz2q0e
+      tags:
+        - Users
+      security:
+        - bearerAuth: []
+    servers: []
+  /users/personal-data:
+    parameters: []
+    get:
+      summary: Get my personal data
+      responses:
+        '200':
+          description: User Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Personal-Data'
+              examples: {}
+        '401':
+          description: Unauthorized
+        '404':
+          description: User Not Found
+        '500':
+          description: Internal Server Error
+      operationId: get-my-personal-data
+      description: Retrieve the personal data of the authenticated user.
       x-stoplight:
         id: bexwy0vpz2q0e
       tags:
@@ -1001,6 +1028,52 @@ components:
             - type: Tenant
               condo_company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
               condo_address: '10880 Malibu Point, 90265'
+    Personal-Data:
+      type: object
+      x-stoplight:
+        id: c7yeu47oix2id
+      x-examples:
+        Example 1:
+          name: Tony Stark
+          email: user@example.com
+          fiscalCode: string
+          vatCode: string
+          contacts:
+            id: string
+            phone: '345123456789'
+            emergency-phone: string
+            email: user@example.com
+            pec: user@pec-example.com
+          address: 'Via Emilia Ovest, 129'
+      examples:
+        - name: Tony Stark
+          email: iron@man.us
+          fiscalCode: string
+          vatCode: string
+          contacts:
+            id: string
+            phone: string
+            emergency-phone: string
+            email: string
+            pec: string
+          address: string
+      properties:
+        name:
+          type: string
+          description: First name + last name
+        email:
+          type: string
+          format: email
+        fiscalCode:
+          type: string
+        vatCode:
+          type: string
+        contacts:
+          $ref: '#/components/schemas/Contact'
+        address:
+          $ref: '#/components/schemas/Address'
+      required:
+        - email
   securitySchemes:
     bearerAuth:
       type: http
