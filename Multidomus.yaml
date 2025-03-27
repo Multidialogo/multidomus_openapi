@@ -25,7 +25,7 @@ paths:
                   value:
                     - title: Tetto
                       description: Ci sono perdite perché si è rotta una tegola del tetto
-                      issue-date: '2019-08-24T14:15:22Z'
+                      issueDate: '2019-08-24T14:15:22Z'
                       status: Nuovo
                       note: la grandine ha rotto la tegola
                       priority: Alta
@@ -67,18 +67,18 @@ paths:
               examples:
                 Example 1:
                   value:
-                    first-name: Harold
-                    last-name: Hogan
+                    firstName: Harold
+                    lastName: Hogan
                     role: string
-                    creation-date: '2019-08-24T14:15:22Z'
-                    last-update-date: '2019-08-24T14:15:22Z'
+                    creationDate: '2019-08-24T14:15:22Z'
+                    lastUpdateDate: '2019-08-24T14:15:22Z'
                     studio: Stark Industries
-                    reception-hours: Lun-Ven 8-13 14-18
+                    receptionHours: Lun-Ven 8-13 14-18
                     address: 'Via Emilia Ovest, 129'
                     contacts:
                       id: string
                       phone: '345123456789'
-                      emergency-phone: string
+                      emergencyPhone: string
                       email: happy@gmail.com
                       pec: user@pec-example.com
         '400':
@@ -136,11 +136,11 @@ paths:
               examples:
                 Example 1:
                   value:
-                    - condo-id: 2f78814f-e2c6-46b8-a02d-89e129b8dd05
+                    - condoId: 2f78814f-e2c6-46b8-a02d-89e129b8dd05
                       alerts:
                         - title: Biciclette
                           description: Si prega di evitare di lasciare biciclette nell'androne
-                          creation-date: '2019-08-24T14:15:22Z'
+                          creationDate: '2019-08-24T14:15:22Z'
                           type: Regolamento
         '400':
           description: Bad Request
@@ -242,14 +242,14 @@ paths:
                   value:
                     name: Morgan
                     address: 'Via Emilia Ovest, 129'
-                    fiscal-code: STRTNY70E29Z404M
+                    fiscalCode: STRTNY70E29Z404M
                     type: Condominio
-                    creation-date: '2019-08-24T14:15:22Z'
-                    last-update-date: '2019-08-24T14:15:22Z'
-                    admin-activities:
-                      - start-date: '2019-08-24'
-                        end-date: '2019-08-24'
-                        admin-company-id: e028496c-e766-4bb7-bb98-e5c8d13cbbac
+                    creationDate: '2019-08-24T14:15:22Z'
+                    lastUpdateDate: '2019-08-24T14:15:22Z'
+                    adminActivities:
+                      - startDate: '2019-08-24'
+                        endDate: '2019-08-24'
+                        adminCompanyId: e028496c-e766-4bb7-bb98-e5c8d13cbbac
                         extraordinary: true
                     accounts:
                       - number: '12341234312'
@@ -296,7 +296,7 @@ paths:
                 Example 1:
                   value:
                     - id: string
-                      owned_fraction: 0.5
+                      ownedFraction: 0.5
                       floor: 2
         '400':
           description: Bad Request
@@ -490,15 +490,15 @@ paths:
               examples:
                 Example 1:
                   value:
-                    first_name: Tony
-                    last_name: Stark
+                    firstName: Tony
+                    lastName: Stark
                     roles:
                       - type: Supplier
-                        supplier_company_id: 2c7f0822-af41-49ba-8d30-cdf65b77d960
-                        company_name: Stark Industries
+                        supplierCompanyId: 2c7f0822-af41-49ba-8d30-cdf65b77d960
+                        companyName: Stark Industries
                       - type: Tenant
-                        condo_company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
-                        condo_address: '10880 Malibu Point, 90265'
+                        condoCompanyId: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+                        condoAddress: '10880 Malibu Point, 90265'
         '401':
           description: Unauthorized
         '404':
@@ -556,22 +556,22 @@ components:
         id: 1z8o4gyxv1p3m
       type: object
       examples:
-        - start-date: '2019-08-24'
-          end-date: '2019-08-24'
-          admin-company-id: e028496c-e766-4bb7-bb98-e5c8d13cbbac
+        - startDate: '2019-08-24'
+          endDate: '2019-08-24'
+          adminCompanyId: e028496c-e766-4bb7-bb98-e5c8d13cbbac
           extraordinary: true
       properties:
-        start-date:
+        startDate:
           type: string
           x-stoplight:
             id: lavv5k642kf8j
           format: date
-        end-date:
+        endDate:
           type: string
           x-stoplight:
             id: v86efk74av1nm
           format: date
-        admin-company-id:
+        adminCompanyId:
           type: string
           x-stoplight:
             id: kkzm3msj7rb69
@@ -581,8 +581,8 @@ components:
           x-stoplight:
             id: gy9cyqbzyq9l6
       required:
-        - start-date
-        - admin-company-id
+        - startDate
+        - adminCompanyId
         - extraordinary
     Administrator:
       title: Administrator
@@ -590,26 +590,26 @@ components:
         id: sd189gyzoi27u
       type: object
       examples:
-        - first-name: Harold
-          last-name: Hogan
+        - firstName: Harold
+          lastName: Hogan
           role: string
-          creation-date: '2019-08-24T14:15:22Z'
-          last-update-date: '2019-08-24T14:15:22Z'
+          creationDate: '2019-08-24T14:15:22Z'
+          lastUpdateDate: '2019-08-24T14:15:22Z'
           studio: Stark Industries
-          reception-hours: Lun-Ven 8-13 14-18
+          receptionHours: Lun-Ven 8-13 14-18
           address: 'Via Emilia Ovest, 129'
           contacts:
             id: string
             phone: '345123456789'
-            emergency-phone: string
+            emergencyPhone: string
             email: happy@gmail.com
             pec: user@pec-example.com
       properties:
-        first-name:
+        firstName:
           type: string
           x-stoplight:
             id: j0vhfkrswcyro
-        last-name:
+        lastName:
           type: string
           x-stoplight:
             id: oqt0cgyv7t243
@@ -617,12 +617,12 @@ components:
           type: string
           x-stoplight:
             id: 0vvcvhzvbyimd
-        creation-date:
+        creationDate:
           type: string
           x-stoplight:
             id: hza6og3v3wggr
           format: date-time
-        last-update-date:
+        lastUpdateDate:
           type: string
           x-stoplight:
             id: rpk159qvf52gp
@@ -631,7 +631,7 @@ components:
           type: string
           x-stoplight:
             id: 5w7wfm9o3jq15
-        reception-hours:
+        receptionHours:
           type: string
           x-stoplight:
             id: m2j37ue8wdmmw
@@ -644,10 +644,10 @@ components:
           x-stoplight:
             id: hsqh52owdtc33
       required:
-        - first-name
-        - last-name
-        - creation-date
-        - last-update-date
+        - firstName
+        - lastName
+        - creationDate
+        - lastUpdateDate
         - studio
         - contacts
     Alert:
@@ -658,7 +658,7 @@ components:
       examples:
         - title: Biciclette
           description: Si prega di evitare di lasciare biciclette nell'androne
-          creation-date: '2019-08-24T14:15:22Z'
+          creationDate: '2019-08-24T14:15:22Z'
           type: Regolamento
       properties:
         title:
@@ -669,7 +669,7 @@ components:
           type: string
           x-stoplight:
             id: fy2ildq5okt1v
-        creation-date:
+        creationDate:
           type: string
           x-stoplight:
             id: u53tidut3a6cq
@@ -686,7 +686,7 @@ components:
           type: string
       required:
         - title
-        - creation-date
+        - creationDate
         - type
     Bank-Account:
       title: Bank-Account
@@ -722,14 +722,14 @@ components:
       examples:
         - name: Morgan
           address: 'Via Emilia Ovest, 129'
-          fiscal-code: STRTNY70E29Z404M
+          fiscalCode: STRTNY70E29Z404M
           type: Condominio
-          creation-date: '2019-08-24T14:15:22Z'
-          last-update-date: '2019-08-24T14:15:22Z'
-          admin-activities:
-            - start-date: '2019-08-24'
-              end-date: '2019-08-24'
-              admin-company-id: e028496c-e766-4bb7-bb98-e5c8d13cbbac
+          creationDate: '2019-08-24T14:15:22Z'
+          lastUpdateDate: '2019-08-24T14:15:22Z'
+          adminActivities:
+            - startDate: '2019-08-24'
+              endDate: '2019-08-24'
+              adminCompanyId: e028496c-e766-4bb7-bb98-e5c8d13cbbac
               extraordinary: true
           accounts:
             - number: '12341234312'
@@ -744,7 +744,7 @@ components:
           $ref: '#/components/schemas/Address'
           x-stoplight:
             id: t2otiys3bzv5m
-        fiscal-code:
+        fiscalCode:
           type: string
           x-stoplight:
             id: 0rqvqbk8uh4cy
@@ -755,17 +755,17 @@ components:
             - Condominio
             - SuperCondominio
           type: string
-        creation-date:
+        creationDate:
           type: string
           x-stoplight:
             id: fkduqobxlxed0
           format: date-time
-        last-update-date:
+        lastUpdateDate:
           type: string
           x-stoplight:
             id: go00yw4r5q2n3
           format: date-time
-        admin-activities:
+        adminActivities:
           type: array
           x-stoplight:
             id: sc5uqezcglcvy
@@ -785,14 +785,20 @@ components:
         - name
         - address
         - type
-        - creation-date
-        - last-update-date
-        - admin-activities
+        - creationDate
+        - lastUpdateDate
+        - adminActivities
     Contact:
       title: Contact
       x-stoplight:
         id: bz3bf4icrlbj5
       type: object
+      examples:
+        - id: string
+          phone: '345123456789'
+          emergencyPhone: string
+          email: user@example.com
+          pec: user@pec-example.com
       properties:
         id:
           type: string
@@ -804,7 +810,7 @@ components:
           type: string
           x-stoplight:
             id: m9owrh20mmbfq
-        emergency-phone:
+        emergencyPhone:
           type: string
           x-stoplight:
             id: du2ydo98vn6w9
@@ -825,23 +831,21 @@ components:
       required:
         - id
         - phone
-        - emergency-phone
+        - emergencyPhone
         - email
-      examples:
-        - id: string
-          phone: '345123456789'
-          emergency-phone: string
-          email: user@example.com
-          pec: user@pec-example.com
     Residential-Unit:
       title: Residential-Unit
       x-stoplight:
         id: gwg93kyw7w39s
       type: object
+      examples:
+        - id: string
+          ownedFraction: 0.5
+          floor: 2
       properties:
         id:
           type: string
-        owned_fraction:
+        ownedFraction:
           type: number
           x-stoplight:
             id: qb8xsqu4f9rin
@@ -855,11 +859,7 @@ components:
             id: 43bvjato1okbp
       required:
         - id
-        - owned_fraction
-      examples:
-        - id: string
-          owned_fraction: 0.5
-          floor: 2
+        - ownedFraction
     Role:
       title: Role
       x-stoplight:
@@ -874,19 +874,19 @@ components:
               enum:
                 - Supplier
               type: string
-            supplier_company_id:
+            supplierCompanyId:
               type: string
               x-stoplight:
                 id: jcv8thl7kahz7
               format: uuid
-            company_name:
+            companyName:
               type: string
               x-stoplight:
                 id: qxpi1suzjsdx1
           required:
             - type
-            - supplier_company_id
-            - company_name
+            - supplierCompanyId
+            - companyName
         - x-stoplight:
             id: qdgob5qhawdq0
           properties:
@@ -896,19 +896,19 @@ components:
               enum:
                 - Tenant
               type: string
-            condo_company_id:
+            condoCompanyId:
               type: string
               x-stoplight:
                 id: ninbczs22urk7
               format: uuid
-            condo_address:
+            condoAddress:
               $ref: '#/components/schemas/Address'
               x-stoplight:
                 id: 4k25eg95p0kjf
           required:
             - type
-            - condo_company_id
-            - condo_address
+            - condoCompanyId
+            - condoAddress
         - x-stoplight:
             id: 1oymp83ebzw2y
           properties:
@@ -918,26 +918,26 @@ components:
                 id: 5mqdokfjc8zae
               enum:
                 - Admin
-            admin_company_id:
+            adminCompanyId:
               type: string
               x-stoplight:
                 id: 5ejlgis332hya
               format: uuid
-            company_name:
+            companyName:
               type: string
               x-stoplight:
                 id: khzirtqt6d97e
           required:
             - type
-            - admin_company_id
-            - company_name
+            - adminCompanyId
+            - companyName
       examples:
         - type: Tenant
-          condo_company_id: 2c7f0822-af41-49ba-8d30-cdf65b77d960
-          condo_address: 'Via Emilia Ovest, 129'
+          condoCompanyId: 2c7f0822-af41-49ba-8d30-cdf65b77d960
+          condoAddress: 'Via Emilia Ovest, 129'
         - type: Supplier
-          supplier_company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
-          company_name: Multicerta s.r.l.
+          supplierCompanyId: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+          companyName: Multicerta s.r.l.
       type: object
     Task:
       title: Task
@@ -947,7 +947,7 @@ components:
       examples:
         - title: Tetto
           description: Ci sono perdite perché si è rotta una tegola del tetto
-          issue-date: '2019-08-24T14:15:22Z'
+          issueDate: '2019-08-24T14:15:22Z'
           status: Nuovo
           note: la grandine ha rotto la tegola
           priority: Alta
@@ -960,7 +960,7 @@ components:
           type: string
           x-stoplight:
             id: wc3b7oh0eu22b
-        issue-date:
+        issueDate:
           type: string
           x-stoplight:
             id: xll5zatfitx3m
@@ -988,7 +988,7 @@ components:
           type: string
       required:
         - title
-        - issue-date
+        - issueDate
         - status
         - priority
     User:
@@ -996,16 +996,22 @@ components:
       type: object
       x-stoplight:
         id: 08wli6aetbnl7
-      required:
-        - first_name
-        - last_name
-        - roles
+      examples:
+        - firstName: Tony
+          lastName: Stark
+          roles:
+            - type: Supplier
+              supplier_company_id: 2c7f0822-af41-49ba-8d30-cdf65b77d960
+              company_name: Stark Industries
+            - type: Tenant
+              condo_company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
+              condo_address: '10880 Malibu Point, 90265'
       properties:
-        first_name:
+        firstName:
           type: string
           x-stoplight:
             id: zrf244fkyujmi
-        last_name:
+        lastName:
           type: string
           x-stoplight:
             id: 230s9qznu9f0w
@@ -1018,16 +1024,10 @@ components:
             $ref: '#/components/schemas/Role'
             x-stoplight:
               id: usf4l3srvkcz5
-      examples:
-        - first_name: Tony
-          last_name: Stark
-          roles:
-            - type: Supplier
-              supplier_company_id: 2c7f0822-af41-49ba-8d30-cdf65b77d960
-              company_name: Stark Industries
-            - type: Tenant
-              condo_company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
-              condo_address: '10880 Malibu Point, 90265'
+      required:
+        - firstName
+        - lastName
+        - roles
     Personal-Data:
       type: object
       x-stoplight:
