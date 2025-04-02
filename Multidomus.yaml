@@ -486,19 +486,31 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/User'
+                type: object
+                properties:
+                  user:
+                    $ref: '#/components/schemas/User'
+                    x-stoplight:
+                      id: kmsqah29sscp5
+                  firstAccess:
+                    type: boolean
+                    x-stoplight:
+                      id: nuf67mghvx17k
+                required:
+                  - user
+                  - firstAccess
               examples:
                 Example 1:
                   value:
-                    firstName: Tony
-                    lastName: Stark
-                    roles:
-                      - type: Supplier
-                        supplierCompanyId: 2c7f0822-af41-49ba-8d30-cdf65b77d960
-                        companyName: Stark Industries
-                      - type: Tenant
-                        condoCompanyId: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
-                        condoAddress: '10880 Malibu Point, 90265'
+                    user:
+                      roles:
+                        - type: Supplier
+                          supplierCompanyId: 60e634ac-9cf5-4a73-a6b6-1e5d15116468
+                          companyName: Stark Industries
+                        - type: Tenant
+                          condoCompanyId: 60e634ac-9cf5-4a73-a6b6-1e5d15116468
+                          condoAddress: '10880 Malibu Point, 90265'
+                    firstAccess: true
         '401':
           description: Unauthorized
         '404':
@@ -514,7 +526,7 @@ paths:
       security:
         - bearerAuth: []
     servers: []
-  /users/personal-data:
+  /users/personal-data/me:
     parameters: []
     get:
       summary: Get my personal data
@@ -997,24 +1009,14 @@ components:
       x-stoplight:
         id: 08wli6aetbnl7
       examples:
-        - firstName: Tony
-          lastName: Stark
-          roles:
+        - roles:
             - type: Supplier
-              supplier_company_id: 2c7f0822-af41-49ba-8d30-cdf65b77d960
-              company_name: Stark Industries
+              supplierCompanyId: 60e634ac-9cf5-4a73-a6b6-1e5d15116468
+              companyName: Stark Industries
             - type: Tenant
-              condo_company_id: b2e6a1c3-1a5e-44ae-a8fd-81f76fd715cf
-              condo_address: '10880 Malibu Point, 90265'
+              condoCompanyId: 60e634ac-9cf5-4a73-a6b6-1e5d15116468
+              condoAddress: '10880 Malibu Point, 90265'
       properties:
-        firstName:
-          type: string
-          x-stoplight:
-            id: zrf244fkyujmi
-        lastName:
-          type: string
-          x-stoplight:
-            id: 230s9qznu9f0w
         roles:
           type: array
           x-stoplight:
@@ -1025,8 +1027,6 @@ components:
             x-stoplight:
               id: usf4l3srvkcz5
       required:
-        - firstName
-        - lastName
         - roles
     Personal-Data:
       type: object
