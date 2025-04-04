@@ -543,10 +543,11 @@ paths:
                     name: Tony Stark
                     fiscalCode: STRTNY70E29Z404P
                     contacts:
-                      phone: '345123456789'
-                      emergencyPhone: '321123456789'
-                      email: iron@man.us
-                      pec: user@pec-example.com
+                      - label: Office
+                        phone: '345123456789'
+                        fax: '321123456789'
+                        email: iron@man.us
+                        pec: user@pec-example.com
                     address: 'Malibu Point, 10880'
         '401':
           description: Unauthorized
@@ -921,23 +922,20 @@ components:
         id: bz3bf4icrlbj5
       type: object
       examples:
-        - phone: '345123456789'
-          emergencyPhone: string
+        - label: Sede HQ
+          phone: '345123456789'
+          fax: '0521123456'
           email: user@example.com
-          pec: user@pec-example.com
+          pec: user@example.com
       properties:
+        label:
+          type: string
+          x-stoplight:
+            id: i5mfqx6tjfa7j
         phone:
           type: string
           x-stoplight:
             id: 12afq6qakbohj
-        cellphone:
-          type: string
-          x-stoplight:
-            id: m9owrh20mmbfq
-        emergencyPhone:
-          type: string
-          x-stoplight:
-            id: du2ydo98vn6w9
         fax:
           type: string
           x-stoplight:
@@ -954,7 +952,6 @@ components:
           format: email
       required:
         - phone
-        - emergencyPhone
         - email
     Residential-Unit:
       title: Residential-Unit
@@ -1160,10 +1157,11 @@ components:
         - name: Tony Stark
           fiscalCode: STRTNY70E29Z404P
           contacts:
-            phone: '345123456789'
-            emergencyPhone: '321123456789'
-            email: iron@man.us
-            pec: user@pec-example.com
+            - label: Office
+              phone: '345123456789'
+              fax: '321123456789'
+              email: iron@man.us
+              pec: user@pec-example.com
           address: 'Malibu Point, 10880'
       properties:
         name:
@@ -1174,7 +1172,11 @@ components:
         vatCode:
           type: string
         contacts:
-          $ref: '#/components/schemas/Contact'
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+            x-stoplight:
+              id: gu3v71a2vemjs
         address:
           $ref: '#/components/schemas/Address'
   securitySchemes:
