@@ -597,21 +597,35 @@ paths:
                   type: string
                 fiscalCode:
                   type: string
+                email:
+                  type: string
+                  x-stoplight:
+                    id: 2zbo17656d96m
+                  format: email
+                pec:
+                  type: string
+                  x-stoplight:
+                    id: bfra5t4asjelv
+                  format: email
+                fax:
+                  type: string
+                  x-stoplight:
+                    id: ufw8ir9n9zu11
                 contacts:
-                  type: object
-                  properties:
-                    phone:
-                      type: string
-                    emergencyPhone:
-                      type: string
-                    email:
-                      type: string
-                      format: email
-                    pec:
-                      type: string
-                      format: email
-                  required:
-                    - email
+                  type: array
+                  items:
+                    x-stoplight:
+                      id: 2aq8ffbe06a52
+                    type: object
+                    properties:
+                      label:
+                        type: string
+                        x-stoplight:
+                          id: jldoyrdlm1oz2
+                      phone:
+                        type: string
+                        x-stoplight:
+                          id: afsamce0qjh0l
                 address:
                   type: object
                   properties:
@@ -623,22 +637,27 @@ paths:
                       type: string
                     address:
                       type: string
+              required:
+                - email
             examples:
               Example 1:
                 value:
                   givenName: Tony
                   familyName: Stark
                   fiscalCode: STRTNY70E29Z404P
+                  email: iron@man.us
+                  pec: iron@pec-man.us
+                  fax: '0521123456'
                   contacts:
-                    phone: '34512345678'
-                    emergencyPhone: '32187654321'
-                    email: iron@man.us
-                    pec: iron@pec-man.us
+                    - label: office
+                      phone: '345123456789'
+                    - label: personal
+                      phone: '321987654321'
                   address:
-                    country: USA
+                    country: United States
                     province: California
                     city: Malibu
-                    address: 10880 Malibu Point
+                    address: 'Malibu Point, 10880'
       description: Confirm the personal data of the authenticated user.
       tags:
         - Users
