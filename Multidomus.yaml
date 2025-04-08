@@ -8,50 +8,6 @@ info:
 servers:
   - url: 'https://api.multidomus.it'
 paths:
-  /tasks:
-    get:
-      summary: Get tasks by company id
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Task'
-              examples:
-                Example 1:
-                  value:
-                    - title: Tetto
-                      description: Ci sono perdite perché si è rotta una tegola del tetto
-                      issueDate: '2019-08-24T14:15:22Z'
-                      status: Nuovo
-                      note: la grandine ha rotto la tegola
-                      priority: Alta
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-      operationId: get-tasks-by-company-id
-      parameters:
-        - schema:
-            type: string
-            format: uuid
-          in: query
-          name: company-id
-          required: true
-          description: The UUID of the company to get info about
-      description: Retrieve the current tasks for the given company
-      x-stoplight:
-        id: t2ehtm7y4gnss
-      tags:
-        - Supplier
-    parameters: []
   /administrator:
     get:
       summary: Get administrator details by condo id
@@ -75,12 +31,13 @@ paths:
                     studio: Stark Industries
                     receptionHours: Lun-Ven 8-13 14-18
                     address: 'Malibu Point, 10880'
+                    emergencyPhone: string
+                    email: happy@gmail.com
+                    pec: user@pec-example.com
+                    fax: '052123456789'
                     contacts:
-                      id: string
+                      label: Office
                       phone: '345123456789'
-                      emergencyPhone: string
-                      email: happy@gmail.com
-                      pec: user@pec-example.com
         '400':
           description: Bad Request
         '401':
@@ -97,134 +54,11 @@ paths:
             type: string
             format: uuid
           in: query
-          name: condo-id
+          name: condoCompanyId
           required: true
           description: The UUID of the condo to get info about
       description: Retrieve the information of the administrator for the given condo
     parameters: []
-  /alerts:
-    get:
-      summary: Get alerts
-      tags:
-        - Tenant
-        - Admin
-      responses:
-        '200':
-          description: OK
-          content:
-            application/json:
-              schema:
-                type: array
-                items:
-                  x-stoplight:
-                    id: z01xzblv4xbbs
-                  type: object
-                  properties:
-                    condo-id:
-                      type: string
-                      x-stoplight:
-                        id: kh8lmvra8539u
-                      format: uuid
-                    alerts:
-                      type: array
-                      x-stoplight:
-                        id: pnh1pv2y8njh9
-                      items:
-                        $ref: '#/components/schemas/Alert'
-                        x-stoplight:
-                          id: 7p7i52uwl4yvr
-              examples:
-                Example 1:
-                  value:
-                    - condoId: 2f78814f-e2c6-46b8-a02d-89e129b8dd05
-                      alerts:
-                        - title: Biciclette
-                          description: Si prega di evitare di lasciare biciclette nell'androne
-                          creationDate: '2019-08-24T14:15:22Z'
-                          type: Regolamento
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '404':
-          description: Not Found
-        '500':
-          description: Internal Server Error
-      operationId: get-alerts-by-condo-id
-      parameters:
-        - schema:
-            type: string
-            format: uuid
-          in: query
-          name: condo-id
-          description: The UUID of the condo to get info about
-      x-stoplight:
-        id: 1wp94f9d6cin3
-      description: 'Retrieve all the current alerts for current user, can be filtered by condo-id'
-    parameters: []
-    post:
-      summary: Send alert
-      operationId: post-alerts
-      responses:
-        '201':
-          description: Created
-        '400':
-          description: Bad Request
-        '401':
-          description: Unauthorized
-        '500':
-          description: Internal Server Error
-      requestBody:
-        content:
-          application/json:
-            schema:
-              type: object
-              x-examples:
-                Example 1:
-                  condo-id: 2f78814f-e2c6-46b8-a02d-89e129b8dd05
-                  title: Perdita tetto
-                  content: Dal mio soffitto entra acqua che arriva dal tetto
-                  type: Guasto
-                  visible-to-all: true
-              properties:
-                condo-id:
-                  type: string
-                title:
-                  type: string
-                content:
-                  type: string
-                type:
-                  type: string
-                  enum:
-                    - Guasto
-                    - Problema
-                    - Richiesta Informazioni
-                    - Altro
-                visible-to-all:
-                  type: boolean
-              required:
-                - condo-id
-                - content
-                - type
-            examples:
-              Example 1:
-                value:
-                  condo-id: 2f78814f-e2c6-46b8-a02d-89e129b8dd05
-                  title: Perdita tetto
-                  content: Dal mio soffitto entra acqua che arriva dal tetto
-                  type: Guasto
-                  visible-to-all: true
-              Example 2:
-                value:
-                  condo-id: 2f78814f-e2c6-46b8-a02d-89e129b8dd05
-                  title: Pagamenti
-                  content: Posso fare un bonifico da un IBAN estero?
-                  type: Richiesta Informazioni
-                  visible-to-all: false
-      description: Send an alert related to a condo
-      tags:
-        - Admin
-        - Tenant
   /condo:
     get:
       summary: Get condo details by condo id
@@ -271,7 +105,7 @@ paths:
             type: string
             format: uuid
           in: query
-          name: condo-id
+          name: condoCompanyId
           required: true
           description: The UUID of the condo to get info about
       description: Retrieve the details of the given condo
@@ -314,7 +148,7 @@ paths:
             type: string
             format: uuid
           in: query
-          name: condo-id
+          name: condoCompanyId
           required: true
           description: The UUID of the condo to get info about
       description: Retrieve the details of the owned residential units in the given condo
@@ -332,56 +166,6 @@ paths:
       operationId: get-healthz
       description: An health check endpoint
       security: []
-  /users/check-email:
-    get:
-      summary: Check email registration
-      tags:
-        - Users
-      responses:
-        '200':
-          description: The email was found
-          content:
-            application/json:
-              schema:
-                type: object
-                properties:
-                  mailStatus:
-                    type: string
-                    x-stoplight:
-                      id: wwsgh5hlc327c
-                    enum:
-                      - NOT_REGISTERED
-                      - MISSING_TS_ID
-                      - REGISTERED
-                required:
-                  - mailStatus
-              examples:
-                Example 1:
-                  value:
-                    mailStatus: NOT_REGISTERED
-                Example 2:
-                  value:
-                    mailStatus: MISSING_TS_ID
-                Example 3:
-                  value:
-                    mailStatus: REGISTERED
-        '400':
-          description: Bad Request
-        '500':
-          description: Internal Server Error
-      operationId: get-users-check-email-registration
-      x-stoplight:
-        id: 1vc3ql9xnp9s1
-      security: []
-      description: Check whether there is a user registered with the given email
-      parameters:
-        - schema:
-            type: string
-          in: query
-          name: email
-          description: The email to be checked
-          required: true
-    parameters: []
   /users/brainware-account:
     parameters: []
     post:
@@ -496,11 +280,22 @@ paths:
                     type: boolean
                     x-stoplight:
                       id: nuf67mghvx17k
+                  emailRegistered:
+                    type: boolean
+                    x-stoplight:
+                      id: y3oss61xqjmu5
                 required:
                   - user
                   - firstAccess
+                  - emailRegistered
               examples:
-                Example 1:
+                First access:
+                  value:
+                    user:
+                      roles: []
+                    firstAccess: true
+                    emailRegistered: false
+                Login multi-role:
                   value:
                     user:
                       roles:
@@ -510,7 +305,8 @@ paths:
                         - type: Tenant
                           condoCompanyId: 60e634ac-9cf5-4a73-a6b6-1e5d15116468
                           condoAddress: '10880 Malibu Point, 90265'
-                    firstAccess: true
+                    firstAccess: false
+                    emailRegistered: true
         '401':
           description: Unauthorized
         '404':
@@ -545,10 +341,10 @@ paths:
                     contacts:
                       - label: Office
                         phone: '345123456789'
-                        fax: '321123456789'
-                        email: iron@man.us
-                        pec: user@pec-example.com
                     address: 'Malibu Point, 10880'
+                    fax: '321123456789'
+                    email: iron@man.us
+                    pec: user@pec-example.com
         '401':
           description: Unauthorized
         '404':
@@ -718,12 +514,13 @@ components:
           studio: Stark Industries
           receptionHours: Lun-Ven 8-13 14-18
           address: 'Malibu Point, 10880'
+          emergencyPhone: string
+          email: happy@gmail.com
+          pec: user@pec-example.com
+          fax: '052123456789'
           contacts:
-            id: string
+            label: Office
             phone: '345123456789'
-            emergencyPhone: string
-            email: happy@gmail.com
-            pec: user@pec-example.com
       properties:
         firstName:
           type: string
@@ -755,20 +552,39 @@ components:
           type: string
           x-stoplight:
             id: m2j37ue8wdmmw
-        address:
-          $ref: '#/components/schemas/Address'
+        email:
+          type: string
           x-stoplight:
-            id: 84lkzpn9g7er3
+            id: rhjo4j17fb4w1
+          format: email
+        pec:
+          type: string
+          x-stoplight:
+            id: kkf3bsfrjimtl
+          format: email
+        emergencyPhone:
+          type: string
+          x-stoplight:
+            id: ta21u41hjj3rs
+        fax:
+          type: string
+          x-stoplight:
+            id: 9u6m42htk5pqr
         contacts:
           $ref: '#/components/schemas/Contact'
           x-stoplight:
             id: hsqh52owdtc33
+        address:
+          $ref: '#/components/schemas/Address'
+          x-stoplight:
+            id: 84lkzpn9g7er3
       required:
         - firstName
         - lastName
         - creationDate
         - lastUpdateDate
         - studio
+        - email
         - contacts
     Alert:
       title: Alert
@@ -955,23 +771,8 @@ components:
           type: string
           x-stoplight:
             id: 12afq6qakbohj
-        fax:
-          type: string
-          x-stoplight:
-            id: jrtf89h8gfh11
-        email:
-          type: string
-          x-stoplight:
-            id: kroz36s6959t0
-          format: email
-        pec:
-          type: string
-          x-stoplight:
-            id: l979q91p2b6w6
-          format: email
       required:
         - phone
-        - email
     Residential-Unit:
       title: Residential-Unit
       x-stoplight:
@@ -1178,10 +979,10 @@ components:
           contacts:
             - label: Office
               phone: '345123456789'
-              fax: '321123456789'
-              email: iron@man.us
-              pec: user@pec-example.com
           address: 'Malibu Point, 10880'
+          fax: '321123456789'
+          email: iron@man.us
+          pec: user@pec-example.com
       properties:
         name:
           type: string
@@ -1198,6 +999,22 @@ components:
               id: gu3v71a2vemjs
         address:
           $ref: '#/components/schemas/Address'
+        fax:
+          type: string
+          x-stoplight:
+            id: r8fmuwgzzjj8k
+        email:
+          type: string
+          x-stoplight:
+            id: gur6afkkd0bo3
+          format: email
+        pec:
+          type: string
+          x-stoplight:
+            id: 97sotdfgeyzzm
+          format: email
+      required:
+        - email
   securitySchemes:
     bearerAuth:
       type: http
