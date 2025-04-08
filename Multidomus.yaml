@@ -334,17 +334,34 @@ paths:
               schema:
                 $ref: '#/components/schemas/Personal-Data'
               examples:
-                Example 1:
+                complete personal data:
                   value:
-                    name: Tony Stark
+                    givenName: Tony
+                    familyName: Stark
                     fiscalCode: STRTNY70E29Z404P
-                    contacts:
-                      - label: Office
-                        phone: '345123456789'
-                    address: 'Malibu Point, 10880'
-                    fax: '321123456789'
                     email: iron@man.us
-                    pec: user@pec-example.com
+                    pec: iron@pec-man.us
+                    fax: '0521123456'
+                    contacts:
+                      - label: office
+                        phone: '345123456789'
+                      - label: personal
+                        phone: '321987654321'
+                    address:
+                      country: United States
+                      province: California
+                      city: Malibu
+                      address: 'Malibu Point, 10880'
+                likely DomuStudio data:
+                  value:
+                    givenName: Tony Stark
+                    fiscalCode: STRTNY70E29Z404P
+                    email: iron@man.us
+                    contacts:
+                      - label: office
+                        phone: '345123456789'
+                    address:
+                      address: 'Malibu (California) Malibu Point, 10880, United States'
         '401':
           description: Unauthorized
         '404':
@@ -370,7 +387,7 @@ paths:
         content:
           application/json:
             schema:
-              type: object
+              $ref: '#/components/schemas/Personal-Data'
               x-examples:
                 Example 1:
                   givenName: string
@@ -386,57 +403,8 @@ paths:
                     province: string
                     city: string
                     address: string
-              properties:
-                givenName:
-                  type: string
-                familyName:
-                  type: string
-                fiscalCode:
-                  type: string
-                email:
-                  type: string
-                  x-stoplight:
-                    id: 2zbo17656d96m
-                  format: email
-                pec:
-                  type: string
-                  x-stoplight:
-                    id: bfra5t4asjelv
-                  format: email
-                fax:
-                  type: string
-                  x-stoplight:
-                    id: ufw8ir9n9zu11
-                contacts:
-                  type: array
-                  items:
-                    x-stoplight:
-                      id: 2aq8ffbe06a52
-                    type: object
-                    properties:
-                      label:
-                        type: string
-                        x-stoplight:
-                          id: jldoyrdlm1oz2
-                      phone:
-                        type: string
-                        x-stoplight:
-                          id: afsamce0qjh0l
-                address:
-                  type: object
-                  properties:
-                    country:
-                      type: string
-                    province:
-                      type: string
-                    city:
-                      type: string
-                    address:
-                      type: string
-              required:
-                - email
             examples:
-              Example 1:
+              Complete data confirmation:
                 value:
                   givenName: Tony
                   familyName: Stark
@@ -454,6 +422,10 @@ paths:
                     province: California
                     city: Malibu
                     address: 'Malibu Point, 10880'
+              Partial update:
+                value:
+                  email: iron@man.us
+                  fax: '0521123455'
       description: Confirm the personal data of the authenticated user.
       tags:
         - Users
@@ -958,63 +930,64 @@ components:
         - roles
     Personal-Data:
       type: object
-      x-stoplight:
-        id: c7yeu47oix2id
       x-examples:
         Example 1:
-          name: Tony Stark
-          email: user@example.com
-          fiscalCode: string
-          vatCode: string
-          contacts:
-            id: string
-            phone: '345123456789'
-            emergency-phone: string
-            email: user@example.com
-            pec: user@pec-example.com
-          address: 'Via Emilia Ovest, 129'
-      examples:
-        - name: Tony Stark
+          givenName: Tony
+          familyName: Stark
           fiscalCode: STRTNY70E29Z404P
-          contacts:
-            - label: Office
-              phone: '345123456789'
-          address: 'Malibu Point, 10880'
-          fax: '321123456789'
           email: iron@man.us
-          pec: user@pec-example.com
+          pec: iron@pec-man.us
+          fax: '0521123456'
+          contacts:
+            - label: office
+              phone: '345123456789'
+            - label: personal
+              phone: '321987654321'
+          address:
+            country: United States
+            province: California
+            city: Malibu
+            address: 'Malibu Point, 10880'
       properties:
-        name:
+        givenName:
           type: string
-          description: First name + last name
+        familyName:
+          type: string
         fiscalCode:
           type: string
-        vatCode:
+        email:
+          type: string
+          format: email
+        pec:
+          type: string
+          format: email
+        fax:
           type: string
         contacts:
           type: array
           items:
             $ref: '#/components/schemas/Contact'
-            x-stoplight:
-              id: gu3v71a2vemjs
         address:
-          $ref: '#/components/schemas/Address'
-        fax:
-          type: string
-          x-stoplight:
-            id: r8fmuwgzzjj8k
-        email:
-          type: string
-          x-stoplight:
-            id: gur6afkkd0bo3
-          format: email
-        pec:
-          type: string
-          x-stoplight:
-            id: 97sotdfgeyzzm
-          format: email
+          $ref: '#/components/schemas/Complete-Address'
       required:
         - email
+      examples:
+        - givenName: Tony
+          familyName: Stark
+          fiscalCode: STRTNY70E29Z404P
+          email: iron@man.us
+          pec: iron@pec-man.us
+          fax: '0521123456'
+          contacts:
+            - label: office
+              phone: '345123456789'
+            - label: personal
+              phone: '321987654321'
+          address:
+            country: United States
+            province: California
+            city: Malibu
+            address: 'Malibu Point, 10880'
   securitySchemes:
     bearerAuth:
       type: http
