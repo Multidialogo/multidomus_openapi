@@ -166,11 +166,11 @@ paths:
       operationId: get-healthz
       description: An health check endpoint
       security: []
-  /users/brainware-account:
+  /users/interventi-account:
     parameters: []
     post:
-      summary: Link Brainware account
-      operationId: post-users-link-brainware-account
+      summary: Link Interventi account (supplier)
+      operationId: post-users-link-interventi-account
       responses:
         '200':
           description: OK
@@ -190,33 +190,28 @@ paths:
             schema:
               type: object
               properties:
-                pid:
-                  type: string
-                  x-stoplight:
-                    id: 8myasvj820nr1
-                username:
+                email:
                   type: string
                   x-stoplight:
                     id: 8cumx1mynvpuz
+                  format: email
                 password:
                   type: string
                   x-stoplight:
                     id: zy2wu53ctlwqv
               required:
-                - pid
-                - username
+                - email
                 - password
             examples:
               Example 1:
                 value:
-                  pid: '968'
-                  username: IronMan
-                  password: P3pp3rP0tt$
-      description: Link the current user to a previous Brainware account
+                  email: user@example.com
+                  password: string
+      description: Link the current user to a previous Interventi account
   /users/miocondominio-account:
     parameters: []
     post:
-      summary: Link MioCondominio account
+      summary: Link MioCondominio account (tenant or admin)
       operationId: post-users-link-miocondominio-account
       responses:
         '200':
