@@ -35,9 +35,9 @@ paths:
                     email: happy@gmail.com
                     pec: user@pec-example.com
                     fax: '052123456789'
-                    contacts:
-                      label: Office
-                      phone: '345123456789'
+                    phoneNumbers:
+                      - label: Office
+                        phone: '345123456789'
         '400':
           description: Bad Request
         '401':
@@ -485,9 +485,9 @@ components:
           email: happy@gmail.com
           pec: user@pec-example.com
           fax: '052123456789'
-          contacts:
-            label: Office
-            phone: '345123456789'
+          phoneNumbers:
+            - label: Office
+              phone: '345123456789'
       properties:
         firstName:
           type: string
@@ -537,10 +537,14 @@ components:
           type: string
           x-stoplight:
             id: 9u6m42htk5pqr
-        contacts:
-          $ref: '#/components/schemas/Contact'
+        phoneNumbers:
           x-stoplight:
             id: hsqh52owdtc33
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+            x-stoplight:
+              id: qc831xgkzed7u
         address:
           $ref: '#/components/schemas/Address'
           x-stoplight:
@@ -552,7 +556,7 @@ components:
         - lastUpdateDate
         - studio
         - email
-        - contacts
+        - phoneNumbers
     Alert:
       title: Alert
       x-stoplight:
