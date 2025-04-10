@@ -38,6 +38,8 @@ paths:
                     phoneNumbers:
                       - label: Office
                         phone: '345123456789'
+                    website: www.happy.us
+                    notes: I'm a good admin!
         '400':
           description: Bad Request
         '401':
@@ -488,6 +490,8 @@ components:
           phoneNumbers:
             - label: Office
               phone: '345123456789'
+          website: www.happy.us
+          notes: I'm a good admin!
       properties:
         firstName:
           type: string
@@ -549,6 +553,14 @@ components:
           $ref: '#/components/schemas/Address'
           x-stoplight:
             id: 84lkzpn9g7er3
+        website:
+          type: string
+          x-stoplight:
+            id: 868v4oaejiwk5
+        notes:
+          type: string
+          x-stoplight:
+            id: 0d58uik60hle7
       required:
         - firstName
         - lastName
