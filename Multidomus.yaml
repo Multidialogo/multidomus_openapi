@@ -86,11 +86,14 @@ paths:
                       - startDate: '2019-08-24'
                         endDate: '2019-08-24'
                         adminCompanyId: e028496c-e766-4bb7-bb98-e5c8d13cbbac
-                        extraordinary: true
+                        type: EXTRAORDINARY
                     accounts:
                       - number: '12341234312'
                         bank: Fort Knox
                         IBAN: IT5492843765923878263463
+                    commonParts:
+                      - ingresso
+                      - giardino
         '400':
           description: Bad Request
         '401':
@@ -444,7 +447,7 @@ components:
         - startDate: '2019-08-24'
           endDate: '2019-08-24'
           adminCompanyId: e028496c-e766-4bb7-bb98-e5c8d13cbbac
-          extraordinary: true
+          type: EXTRAORDINARY
       properties:
         startDate:
           type: string
@@ -461,14 +464,18 @@ components:
           x-stoplight:
             id: kkzm3msj7rb69
           format: uuid
-        extraordinary:
-          type: boolean
+        type:
+          type: string
           x-stoplight:
             id: gy9cyqbzyq9l6
+          enum:
+            - ORDINARY
+            - EXTRAORDINARY
+            - AUXILIARY
       required:
         - startDate
         - adminCompanyId
-        - extraordinary
+        - type
     Administrator:
       title: Administrator
       x-stoplight:
@@ -676,11 +683,14 @@ components:
             - startDate: '2019-08-24'
               endDate: '2019-08-24'
               adminCompanyId: e028496c-e766-4bb7-bb98-e5c8d13cbbac
-              extraordinary: true
+              type: EXTRAORDINARY
           accounts:
             - number: '12341234312'
               bank: Fort Knox
               IBAN: IT5492843765923878263463
+          commonParts:
+            - ingresso
+            - giardino
       properties:
         name:
           type: string
@@ -727,6 +737,14 @@ components:
             $ref: '#/components/schemas/Bank-Account'
             x-stoplight:
               id: g02r9ka96n6px
+        commonParts:
+          type: array
+          x-stoplight:
+            id: nxx8o6ig6gubr
+          items:
+            x-stoplight:
+              id: 5to98x70ffv2t
+            type: string
       required:
         - name
         - address
@@ -734,6 +752,7 @@ components:
         - creationDate
         - lastUpdateDate
         - adminActivities
+        - commonParts
     Contact:
       title: Contact
       x-stoplight:
