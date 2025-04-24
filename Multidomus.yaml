@@ -619,6 +619,15 @@ components:
       x-stoplight:
         id: w7jmblsga16qp
       type: object
+      examples:
+        - number: '12341234312'
+          bank: Fort Knox
+          IBAN: IT5492843765923878263463
+        - number: '12341234312'
+          bank: Fort Knox
+          IBAN: IT5492843765923878263463
+          SWIFT: PRACIT31XXX
+          Holder: Tony Stark
       properties:
         number:
           type: string
@@ -632,14 +641,18 @@ components:
           type: string
           x-stoplight:
             id: lfbbn7jaa1eap
+        holder:
+          type: string
+          x-stoplight:
+            id: 8vb0pgyt858qi
+        SWIFT:
+          type: string
+          x-stoplight:
+            id: 6rzf28l0n1y9j
       required:
         - number
         - bank
         - IBAN
-      examples:
-        - number: '12341234312'
-          bank: Fort Knox
-          IBAN: IT5492843765923878263463
     Complete-Address:
       title: Complete-Address
       x-stoplight:
