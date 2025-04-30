@@ -87,10 +87,12 @@ paths:
                         endDate: '2019-08-24'
                         adminCompanyId: e028496c-e766-4bb7-bb98-e5c8d13cbbac
                         type: EXTRAORDINARY
-                    accounts:
-                      - number: '12341234312'
-                        bank: Fort Knox
-                        IBAN: IT5492843765923878263463
+                        bankAccount:
+                          number: '12341234312'
+                          bank: Fort Knox
+                          IBAN: IT5492843765923878263463
+                          SWIFT: PRACIT31XXX
+                          Holder: Tony Stark
                     commonParts:
                       - ingresso
                       - giardino
@@ -448,6 +450,12 @@ components:
           endDate: '2019-08-24'
           adminCompanyId: e028496c-e766-4bb7-bb98-e5c8d13cbbac
           type: EXTRAORDINARY
+          bankAccount:
+            number: '12341234312'
+            bank: Fort Knox
+            IBAN: IT5492843765923878263463
+            SWIFT: PRACIT31XXX
+            Holder: Tony Stark
       properties:
         startDate:
           type: string
@@ -472,10 +480,15 @@ components:
             - ORDINARY
             - EXTRAORDINARY
             - AUXILIARY
+        bankAccount:
+          $ref: '#/components/schemas/Bank-Account'
+          x-stoplight:
+            id: u3z3qfc02mslj
       required:
         - startDate
         - adminCompanyId
         - type
+        - bankAccount
     Administrator:
       title: Administrator
       x-stoplight:
@@ -697,10 +710,12 @@ components:
               endDate: '2019-08-24'
               adminCompanyId: e028496c-e766-4bb7-bb98-e5c8d13cbbac
               type: EXTRAORDINARY
-          accounts:
-            - number: '12341234312'
-              bank: Fort Knox
-              IBAN: IT5492843765923878263463
+              bankAccount:
+                number: '12341234312'
+                bank: Fort Knox
+                IBAN: IT5492843765923878263463
+                SWIFT: PRACIT31XXX
+                Holder: Tony Stark
           commonParts:
             - ingresso
             - giardino
@@ -742,14 +757,6 @@ components:
             $ref: '#/components/schemas/Admin-Activity'
             x-stoplight:
               id: urfcfnhval9ma
-        accounts:
-          type: array
-          x-stoplight:
-            id: bf1bl3invw1yr
-          items:
-            $ref: '#/components/schemas/Bank-Account'
-            x-stoplight:
-              id: g02r9ka96n6px
         commonParts:
           type: array
           x-stoplight:
