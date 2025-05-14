@@ -1,6 +1,6 @@
 openapi: 3.1.0
 x-stoplight:
-  id: pwf784ccdu36j
+  id: k2ae1febqyue7
 info:
   title: Multidomus
   version: '1.0'
@@ -50,7 +50,7 @@ paths:
           description: Internal Server Error
       operationId: get-administrator-by-condo-id
       x-stoplight:
-        id: b45udl5e8l11f
+        id: 2mty1zbpd3yqz
       parameters:
         - schema:
             type: string
@@ -87,12 +87,6 @@ paths:
                         endDate: '2019-08-24'
                         adminCompanyId: e028496c-e766-4bb7-bb98-e5c8d13cbbac
                         type: EXTRAORDINARY
-                        bankAccount:
-                          number: '12341234312'
-                          bank: Fort Knox
-                          IBAN: IT5492843765923878263463
-                          SWIFT: PRACIT31XXX
-                          Holder: Tony Stark
                     commonParts:
                       - ingresso
                       - giardino
@@ -106,7 +100,7 @@ paths:
           description: Internal Server Error
       operationId: get-condo-by-condo-id
       x-stoplight:
-        id: 3yv80wdr060ps
+        id: 0ls2z85ofg5yh
       parameters:
         - schema:
             type: string
@@ -139,6 +133,10 @@ paths:
                     - id: string
                       ownedFraction: 0.5
                       floor: 2
+                      unitType: Appartamento
+                      ownership: Usufruttuario
+                      unitNumber: '10'
+                      buildingSection: A
         '400':
           description: Bad Request
         '401':
@@ -149,7 +147,7 @@ paths:
           description: Internal Server Error
       operationId: get-units-by-condo-id
       x-stoplight:
-        id: 3yv80wdr060ps
+        id: h4dkx6tqb9k7q
       parameters:
         - schema:
             type: string
@@ -173,6 +171,8 @@ paths:
       operationId: get-healthz
       description: An health check endpoint
       security: []
+      x-stoplight:
+        id: hgb4feucdcpij
   /users/interventi-account:
     parameters: []
     post:
@@ -215,6 +215,8 @@ paths:
                   email: user@example.com
                   password: string
       description: Link the current user to a previous Interventi account
+      x-stoplight:
+        id: wgguhlu0huhrx
   /users/miocondominio-account:
     parameters: []
     post:
@@ -262,6 +264,8 @@ paths:
                   username: IronMan
                   password: P3pp3rP0tt$
       description: Link the current user to a previous MioCondominio account
+      x-stoplight:
+        id: nvvon9w20vdt6
   /users/me:
     parameters: []
     get:
@@ -318,7 +322,7 @@ paths:
       operationId: get-users-me
       description: Retrieve the information of the authenticated user.
       x-stoplight:
-        id: bexwy0vpz2q0e
+        id: awli6den0gkbp
       tags:
         - Users
       security:
@@ -336,7 +340,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Personal-Data'
               examples:
-                complete personal data:
+                Example 1:
                   value:
                     givenName: Tony
                     familyName: Stark
@@ -354,16 +358,30 @@ paths:
                       province: California
                       city: Malibu
                       address: 'Malibu Point, 10880'
-                likely DomuStudio data:
+                    vatCode: '93123491239049'
+                    careOff: Stark Industries LTD
+                    deliveryAddress: 'Marvel Str. 123, Gotham'
+                Example 2:
                   value:
-                    givenName: Tony Stark
-                    fiscalCode: STRTNY70E29Z404P
-                    email: iron@man.us
+                    givenName: Il
+                    familyName: Rumeno
+                    fiscalCode: RDACLN88D29Z129G
+                    email: irom@man.us
+                    pec: irom@pec-man.us
+                    fax: '0521123456'
                     contacts:
                       - label: office
                         phone: '345123456789'
+                      - label: personal
+                        phone: '321987654321'
                     address:
-                      address: 'Malibu (California) Malibu Point, 10880, United States'
+                      country: Romania
+                      province: Ilfov
+                      city: Bucarest
+                      address: Strada Il Rumeno 69
+                    vatCode: '93123491239049'
+                    careOff: Romanianin Industries LTD
+                    deliveryAddress: 'Marvello Str. 123, Bucarest'
         '401':
           description: Unauthorized
         '404':
@@ -373,7 +391,7 @@ paths:
       operationId: get-my-personal-data
       description: Retrieve the personal data of the authenticated user.
       x-stoplight:
-        id: bexwy0vpz2q0e
+        id: swrstziq8b4tm
       tags:
         - Users
       security:
@@ -431,31 +449,31 @@ paths:
       description: Confirm the personal data of the authenticated user.
       tags:
         - Users
+      x-stoplight:
+        id: rsm97ew2hndfd
 components:
   schemas:
     Address:
       title: Address
       x-stoplight:
-        id: z50xas5yrryv1
+        id: q4lc48y93qb7b
       type: string
       examples:
         - 'Malibu Point, 10880'
     Admin-Activity:
       title: Admin-Activity
       x-stoplight:
-        id: 1z8o4gyxv1p3m
+        id: woadxumdo3hlv
       type: object
       examples:
         - startDate: '2019-08-24'
           endDate: '2019-08-24'
           adminCompanyId: e028496c-e766-4bb7-bb98-e5c8d13cbbac
           type: EXTRAORDINARY
-          bankAccount:
-            number: '12341234312'
-            bank: Fort Knox
-            IBAN: IT5492843765923878263463
-            SWIFT: PRACIT31XXX
-            Holder: Tony Stark
+      required:
+        - startDate
+        - adminCompanyId
+        - type
       properties:
         startDate:
           type: string
@@ -483,16 +501,11 @@ components:
         bankAccount:
           $ref: '#/components/schemas/Bank-Account'
           x-stoplight:
-            id: u3z3qfc02mslj
-      required:
-        - startDate
-        - adminCompanyId
-        - type
-        - bankAccount
+            id: f77q4ecjbuavx
     Administrator:
       title: Administrator
       x-stoplight:
-        id: sd189gyzoi27u
+        id: yr06zzlvcpohz
       type: object
       examples:
         - firstName: Harold
@@ -592,7 +605,7 @@ components:
     Alert:
       title: Alert
       x-stoplight:
-        id: ss8myksrd80v4
+        id: q3ka4fy3cpyfn
       type: object
       examples:
         - title: Biciclette
@@ -630,7 +643,7 @@ components:
     Bank-Account:
       title: Bank-Account
       x-stoplight:
-        id: w7jmblsga16qp
+        id: w330dlugyy927
       type: object
       examples:
         - number: '12341234312'
@@ -669,7 +682,7 @@ components:
     Complete-Address:
       title: Complete-Address
       x-stoplight:
-        id: 9o7e9l2zrdobc
+        id: k9ds5vaox9hq1
       type: object
       properties:
         country:
@@ -696,7 +709,7 @@ components:
     Condo:
       title: Condo
       x-stoplight:
-        id: ouda83379zkok
+        id: kqh2ndjpk12bl
       type: object
       examples:
         - name: Morgan
@@ -710,15 +723,18 @@ components:
               endDate: '2019-08-24'
               adminCompanyId: e028496c-e766-4bb7-bb98-e5c8d13cbbac
               type: EXTRAORDINARY
-              bankAccount:
-                number: '12341234312'
-                bank: Fort Knox
-                IBAN: IT5492843765923878263463
-                SWIFT: PRACIT31XXX
-                Holder: Tony Stark
           commonParts:
             - ingresso
             - giardino
+      x-internal: false
+      required:
+        - name
+        - address
+        - type
+        - creationDate
+        - lastUpdateDate
+        - adminActivities
+        - commonParts
       properties:
         name:
           type: string
@@ -765,18 +781,10 @@ components:
             x-stoplight:
               id: 5to98x70ffv2t
             type: string
-      required:
-        - name
-        - address
-        - type
-        - creationDate
-        - lastUpdateDate
-        - adminActivities
-        - commonParts
     Contact:
       title: Contact
       x-stoplight:
-        id: bz3bf4icrlbj5
+        id: 6a8zjd7ytuhy6
       type: object
       examples:
         - label: Sede HQ
@@ -798,12 +806,20 @@ components:
     Residential-Unit:
       title: Residential-Unit
       x-stoplight:
-        id: gwg93kyw7w39s
+        id: k484ebo5i445y
       type: object
       examples:
         - id: string
           ownedFraction: 0.5
           floor: 2
+          unitType: Appartamento
+          ownership: Usufruttuario
+          unitNumber: '10'
+          buildingSection: A
+      x-internal: false
+      required:
+        - id
+        - ownedFraction
       properties:
         id:
           type: string
@@ -819,13 +835,30 @@ components:
           type: integer
           x-stoplight:
             id: 43bvjato1okbp
-      required:
-        - id
-        - ownedFraction
+        unitType:
+          x-stoplight:
+            id: o878v7rtdk6iz
+          enum:
+            - Appartamento
+            - Box
+            - Garage
+          example: Appartamento
+        ownership:
+          type: string
+          x-stoplight:
+            id: 834034k9ovsen
+        buildingSection:
+          type: string
+          x-stoplight:
+            id: hpwta5t80s2v6
+        unitNumber:
+          type: string
+          x-stoplight:
+            id: zfq0y0g4f26z5
     Role:
       title: Role
       x-stoplight:
-        id: c5i27osgdsk0g
+        id: rbqocxd87ua3b
       anyOf:
         - x-stoplight:
             id: bfx1v1a5t26y5
@@ -904,7 +937,7 @@ components:
     Task:
       title: Task
       x-stoplight:
-        id: nogmilwtad7pj
+        id: kpvyzyom7mnv1
       type: object
       examples:
         - title: Tetto
@@ -957,7 +990,7 @@ components:
       title: User
       type: object
       x-stoplight:
-        id: 08wli6aetbnl7
+        id: w549qs8rj0cpc
       examples:
         - roles:
             - type: Supplier
@@ -998,6 +1031,31 @@ components:
             province: California
             city: Malibu
             address: 'Malibu Point, 10880'
+      examples:
+        - givenName: Tony
+          familyName: Stark
+          fiscalCode: STRTNY70E29Z404P
+          email: iron@man.us
+          pec: iron@pec-man.us
+          fax: '0521123456'
+          contacts:
+            - label: office
+              phone: '345123456789'
+            - label: personal
+              phone: '321987654321'
+          address:
+            country: United States
+            province: California
+            city: Malibu
+            address: 'Malibu Point, 10880'
+          vatCode: '93123491239049'
+          careOff: Stark Industries LTD
+          deliveryAddress: 'Marvel Str. 123, Gotham'
+      x-stoplight:
+        id: emcy67rkwjtgj
+      x-internal: false
+      required:
+        - email
       properties:
         givenName:
           type: string
@@ -1019,25 +1077,18 @@ components:
             $ref: '#/components/schemas/Contact'
         address:
           $ref: '#/components/schemas/Complete-Address'
-      required:
-        - email
-      examples:
-        - givenName: Tony
-          familyName: Stark
-          fiscalCode: STRTNY70E29Z404P
-          email: iron@man.us
-          pec: iron@pec-man.us
-          fax: '0521123456'
-          contacts:
-            - label: office
-              phone: '345123456789'
-            - label: personal
-              phone: '321987654321'
-          address:
-            country: United States
-            province: California
-            city: Malibu
-            address: 'Malibu Point, 10880'
+        vatCode:
+          type: string
+          x-stoplight:
+            id: faw07s0jvz3nq
+        careOff:
+          type: string
+          x-stoplight:
+            id: ypwhfqzulpw52
+        deliveryAddress:
+          type: string
+          x-stoplight:
+            id: 48rwdbf9f8obd
   securitySchemes:
     bearerAuth:
       type: http
