@@ -1,6 +1,6 @@
 openapi: 3.1.0
 x-stoplight:
-  id: k2ae1febqyue7
+  id: 578vl7vb5w8rk
 info:
   title: Multidomus
   version: '1.0'
@@ -50,7 +50,7 @@ paths:
           description: Internal Server Error
       operationId: get-administrator-by-condo-id
       x-stoplight:
-        id: 2mty1zbpd3yqz
+        id: o03lz4d48liqj
       parameters:
         - schema:
             type: string
@@ -100,7 +100,7 @@ paths:
           description: Internal Server Error
       operationId: get-condo-by-condo-id
       x-stoplight:
-        id: 0ls2z85ofg5yh
+        id: e1atd327p214w
       parameters:
         - schema:
             type: string
@@ -147,7 +147,7 @@ paths:
           description: Internal Server Error
       operationId: get-units-by-condo-id
       x-stoplight:
-        id: h4dkx6tqb9k7q
+        id: 3ogu3cqwxrr4m
       parameters:
         - schema:
             type: string
@@ -172,7 +172,7 @@ paths:
       description: An health check endpoint
       security: []
       x-stoplight:
-        id: hgb4feucdcpij
+        id: afveor7b9pzfc
   /users/interventi-account:
     parameters: []
     post:
@@ -216,7 +216,7 @@ paths:
                   password: string
       description: Link the current user to a previous Interventi account
       x-stoplight:
-        id: wgguhlu0huhrx
+        id: qdvmgr8yxfb5v
   /users/miocondominio-account:
     parameters: []
     post:
@@ -265,7 +265,7 @@ paths:
                   password: P3pp3rP0tt$
       description: Link the current user to a previous MioCondominio account
       x-stoplight:
-        id: nvvon9w20vdt6
+        id: lt8gdxg4w171n
   /users/me:
     parameters: []
     get:
@@ -322,7 +322,7 @@ paths:
       operationId: get-users-me
       description: Retrieve the information of the authenticated user.
       x-stoplight:
-        id: awli6den0gkbp
+        id: jj0v2znybs8xq
       tags:
         - Users
       security:
@@ -344,6 +344,7 @@ paths:
                   value:
                     givenName: Tony
                     familyName: Stark
+                    completeName: Tony Stark
                     fiscalCode: STRTNY70E29Z404P
                     email: iron@man.us
                     pec: iron@pec-man.us
@@ -357,31 +358,9 @@ paths:
                       country: United States
                       province: California
                       city: Malibu
-                      address: 'Malibu Point, 10880'
-                    vatCode: '93123491239049'
-                    careOff: Stark Industries LTD
-                    deliveryAddress: 'Marvel Str. 123, Gotham'
-                Example 2:
-                  value:
-                    givenName: Il
-                    familyName: Rumeno
-                    fiscalCode: RDACLN88D29Z129G
-                    email: irom@man.us
-                    pec: irom@pec-man.us
-                    fax: '0521123456'
-                    contacts:
-                      - label: office
-                        phone: '345123456789'
-                      - label: personal
-                        phone: '321987654321'
-                    address:
-                      country: Romania
-                      province: Ilfov
-                      city: Bucarest
-                      address: Strada Il Rumeno 69
-                    vatCode: '93123491239049'
-                    careOff: Romanianin Industries LTD
-                    deliveryAddress: 'Marvello Str. 123, Bucarest'
+                      address: 'Malibu Point, 15/A'
+                      postalCode: '10880'
+                    careOf: Stark Industries LTD
         '401':
           description: Unauthorized
         '404':
@@ -391,7 +370,7 @@ paths:
       operationId: get-my-personal-data
       description: Retrieve the personal data of the authenticated user.
       x-stoplight:
-        id: swrstziq8b4tm
+        id: dgc0cafoqj7dr
       tags:
         - Users
       security:
@@ -407,7 +386,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Personal-Data'
+              $ref: '#/components/schemas/Personal-Data-Patch'
               x-examples:
                 Example 1:
                   givenName: string
@@ -429,7 +408,6 @@ paths:
                   givenName: Tony
                   familyName: Stark
                   fiscalCode: STRTNY70E29Z404P
-                  email: iron@man.us
                   pec: iron@pec-man.us
                   fax: '0521123456'
                   contacts:
@@ -441,29 +419,35 @@ paths:
                     country: United States
                     province: California
                     city: Malibu
-                    address: 'Malibu Point, 10880'
+                    address: 'Malibu Point, 15/A'
+                    postalCode: '10880'
+                  careOf: Stark Industries LTD
               Partial update:
                 value:
-                  email: iron@man.us
+                  contacts:
+                    - label: office
+                      phone: '0532456789'
+                    - label: mobile
+                      phone: '345123456789'
                   fax: '0521123455'
       description: Confirm the personal data of the authenticated user.
       tags:
         - Users
       x-stoplight:
-        id: rsm97ew2hndfd
+        id: sne2sug1bl5mg
 components:
   schemas:
     Address:
       title: Address
       x-stoplight:
-        id: q4lc48y93qb7b
+        id: f145aunsjiu37
       type: string
       examples:
         - 'Malibu Point, 10880'
     Admin-Activity:
       title: Admin-Activity
       x-stoplight:
-        id: woadxumdo3hlv
+        id: qc2tdjxlzjm3f
       type: object
       examples:
         - startDate: '2019-08-24'
@@ -505,7 +489,7 @@ components:
     Administrator:
       title: Administrator
       x-stoplight:
-        id: yr06zzlvcpohz
+        id: t0kzx7bz7d3yj
       type: object
       examples:
         - firstName: Harold
@@ -605,7 +589,7 @@ components:
     Alert:
       title: Alert
       x-stoplight:
-        id: q3ka4fy3cpyfn
+        id: 6nxftgc5uvjm0
       type: object
       examples:
         - title: Biciclette
@@ -643,7 +627,7 @@ components:
     Bank-Account:
       title: Bank-Account
       x-stoplight:
-        id: w330dlugyy927
+        id: oohakjwezjkoh
       type: object
       examples:
         - number: '12341234312'
@@ -680,36 +664,35 @@ components:
         - bank
         - IBAN
     Complete-Address:
-      title: Complete-Address
-      x-stoplight:
-        id: k9ds5vaox9hq1
       type: object
       properties:
         country:
           type: string
-          x-stoplight:
-            id: 9lia7cdggonte
         province:
           type: string
-          x-stoplight:
-            id: qmbf3nsppy1in
         city:
           type: string
-          x-stoplight:
-            id: 6lp5r8f62hh39
         address:
-          $ref: '#/components/schemas/Address'
-          x-stoplight:
-            id: o4dpf6jljeyd9
-      examples:
-        - country: USA
+          type: string
+        postalCode:
+          type: string
+      x-examples:
+        Example 1:
+          country: USA
           province: California
           city: Malibu
-          address: 'Malibu Point, 10880'
+          address: Malibu Point
+          postalCode: '10880'
+      examples:
+        - country: Italia
+          province: FE
+          city: Copparo
+          address: 'Via Montebello, 15'
+          postalCode: '44034'
     Condo:
       title: Condo
       x-stoplight:
-        id: kqh2ndjpk12bl
+        id: k1tyb24qaib9l
       type: object
       examples:
         - name: Morgan
@@ -784,7 +767,7 @@ components:
     Contact:
       title: Contact
       x-stoplight:
-        id: 6a8zjd7ytuhy6
+        id: 1q9fuyc10cm21
       type: object
       examples:
         - label: Sede HQ
@@ -806,7 +789,7 @@ components:
     Residential-Unit:
       title: Residential-Unit
       x-stoplight:
-        id: k484ebo5i445y
+        id: 9kpusdy1aihoq
       type: object
       examples:
         - id: string
@@ -858,7 +841,7 @@ components:
     Role:
       title: Role
       x-stoplight:
-        id: rbqocxd87ua3b
+        id: fy88rf4k1owrr
       anyOf:
         - x-stoplight:
             id: bfx1v1a5t26y5
@@ -937,7 +920,7 @@ components:
     Task:
       title: Task
       x-stoplight:
-        id: kpvyzyom7mnv1
+        id: jt0mzq4m9dird
       type: object
       examples:
         - title: Tetto
@@ -990,7 +973,7 @@ components:
       title: User
       type: object
       x-stoplight:
-        id: w549qs8rj0cpc
+        id: fugyd8ptw55o6
       examples:
         - roles:
             - type: Supplier
@@ -1031,9 +1014,13 @@ components:
             province: California
             city: Malibu
             address: 'Malibu Point, 10880'
+      x-stoplight:
+        id: cme72qiad2cuo
+      x-internal: false
       examples:
         - givenName: Tony
           familyName: Stark
+          completeName: Tony Stark
           fiscalCode: STRTNY70E29Z404P
           email: iron@man.us
           pec: iron@pec-man.us
@@ -1047,20 +1034,23 @@ components:
             country: United States
             province: California
             city: Malibu
-            address: 'Malibu Point, 10880'
-          vatCode: '93123491239049'
-          careOff: Stark Industries LTD
-          deliveryAddress: 'Marvel Str. 123, Gotham'
-      x-stoplight:
-        id: emcy67rkwjtgj
-      x-internal: false
+            address: 'Malibu Point, 15/A'
+            postalCode: '10880'
+          careOf: Stark Industries LTD
       required:
+        - fiscalCode
         - email
+        - contacts
+        - address
       properties:
         givenName:
           type: string
         familyName:
           type: string
+        completeName:
+          type: string
+          x-stoplight:
+            id: 7eoin571whbyp
         fiscalCode:
           type: string
         email:
@@ -1077,18 +1067,54 @@ components:
             $ref: '#/components/schemas/Contact'
         address:
           $ref: '#/components/schemas/Complete-Address'
-        vatCode:
-          type: string
-          x-stoplight:
-            id: faw07s0jvz3nq
-        careOff:
+        careOf:
           type: string
           x-stoplight:
             id: ypwhfqzulpw52
-        deliveryAddress:
+    Personal-Data-Patch:
+      type: object
+      x-stoplight:
+        id: n60g2663dr8et
+      x-internal: false
+      examples:
+        - givenName: Tony
+          familyName: Stark
+          fiscalCode: STRTNY70E29Z404P
+          pec: iron@pec-man.us
+          fax: '0521123456'
+          contacts:
+            - label: office
+              phone: '345123456789'
+            - label: personal
+              phone: '321987654321'
+          address:
+            country: United States
+            province: California
+            city: Malibu
+            address: 'Malibu Point, 15/A'
+            postalCode: '10880'
+          careOf: Stark Industries LTD
+      properties:
+        givenName:
           type: string
-          x-stoplight:
-            id: 48rwdbf9f8obd
+        familyName:
+          type: string
+        fiscalCode:
+          type: string
+        pec:
+          type: string
+          format: email
+        fax:
+          type: string
+        contacts:
+          type: array
+          items:
+            $ref: '#/components/schemas/Contact'
+        address:
+          $ref: '#/components/schemas/Complete-Address'
+        careOf:
+          type: string
+      description: ''
   securitySchemes:
     bearerAuth:
       type: http
